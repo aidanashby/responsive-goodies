@@ -1,0 +1,49 @@
+/* Prevent horizontal scroll */
+
+html,
+body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+}
+
+* {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure containers don't exceed viewport width */
+.container,
+.et-container,
+.et_pb_row,
+.et_pb_section {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+/* Handle specific problem elements */
+img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+pre,
+code {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+}
+
+table {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    display: block !important;
+    white-space: nowrap;
+}
+
+/* Handle iframe and embedded content */
+iframe,
+embed,
+object {
+    max-width: 100% !important;
+}
