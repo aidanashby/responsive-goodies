@@ -1,0 +1,22 @@
+/* Device Menu Visibility - Using Divi breakpoints */
+
+/* Desktop: 981px and above */
+@media (min-width: 981px) {
+    .rg-hide-desktop {
+        display: none !important;
+    }
+}
+
+/* Tablet: 768px to 980px */
+@media (min-width: 768px) and (max-width: 980px) {
+    .rg-hide-tablet {
+        display: none !important;
+    }
+}
+
+/* Mobile: 767px and below */
+@media (max-width: 767px) {
+    .rg-hide-mobile {
+        display: none !important;
+    }
+}

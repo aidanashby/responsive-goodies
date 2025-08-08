@@ -1,0 +1,5 @@
+/* Back to Top Button base styles */
+.et_pb_scroll_top {
+    /* Base styles - Divi handles the rest */
+    transition: opacity 0.3s ease;
+}

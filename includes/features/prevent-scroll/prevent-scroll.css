@@ -1,0 +1,90 @@
+/* Prevent horizontal scroll - Divi 5 compatible */
+
+html,
+body {
+    overflow-x: hidden !important;
+}
+
+/* Target problematic elements that commonly cause horizontal scroll */
+img:not(.et_pb_image img):not(.et_pb_gallery_image img) {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Handle text content that might overflow */
+pre,
+code {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+}
+
+/* Handle wide tables */
+table:not(.et_pb_pricing_table):not(.et_pb_table) {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    display: block !important;
+    white-space: nowrap;
+}
+
+/* Handle iframe and embedded content */
+iframe:not(.et_pb_video_box iframe):not(.et_pb_map iframe),
+embed:not(.et_pb_video_box embed),
+object:not(.et_pb_video_box object) {
+    max-width: 100% !important;
+}
+
+/* Target specific problem elements while preserving Divi structure */
+.widget,
+.sidebar,
+.footer-widget,
+.et_pb_text,
+.et_pb_blurb_content {
+    overflow-x: hidden !important;
+}
+
+/* Ensure form elements don't cause overflow */
+input[type="text"]:not(.et_pb_contact input),
+input[type="email"]:not(.et_pb_contact input),
+input[type="url"]:not(.et_pb_contact input),
+input[type="search"]:not(.et_pb_contact input),
+textarea:not(.et_pb_contact textarea),
+select:not(.et_pb_contact select) {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Handle long URLs and text that might not break */
+.et_pb_text p,
+.et_pb_text div,
+.et_pb_blurb_description,
+.widget p,
+.comment-content {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+}
+
+/* Specifically exclude Divi containers from width restrictions */
+.et_pb_section,
+.et_pb_row,
+.et_pb_column,
+.et-main-area,
+.et_pb_extra_column,
+.et_pb_gutters3,
+.et-l,
+.et-l--header,
+.et-l--body,
+.et-l--footer,
+.et_theme_builder_global_body {
+    /* Do not apply max-width restrictions to Divi layout elements */
+}
+
+/* Additional safety for Divi 5 specific classes */
+.et-core-wrapper,
+.et-bfb-wrapper,
+.et_pb_dmb_breadcrumb,
+.et_divi_builder {
+    /* Preserve Divi's intended layout */
+}
