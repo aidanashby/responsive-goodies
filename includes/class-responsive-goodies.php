@@ -28,16 +28,22 @@ class Responsive_Goodies {
     public function run() {
         $this->settings = new Responsive_Goodies_Settings();
         
+        // Always allow admin settings
+        add_action('admin_menu', array($this->settings, 'add_admin_menu'));
+        add_action('admin_init', array($this->settings, 'init_settings'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
+        
+        // Don't initialize features if Divi builder is active
+        if ($this->is_divi_builder_active()) {
+            return;
+        }
+        
         // Initialize features
         $this->features['orphan_fix'] = new Responsive_Goodies_Orphan_Fix();
         $this->features['device_menu'] = new Responsive_Goodies_Device_Menu();
         $this->features['disable_hover'] = new Responsive_Goodies_Disable_Hover();
         $this->features['prevent_scroll'] = new Responsive_Goodies_Prevent_Scroll();
         $this->features['back_to_top'] = new Responsive_Goodies_Back_To_Top();
-        
-        // Hook into WordPress
-        add_action('admin_menu', array($this->settings, 'add_admin_menu'));
-        add_action('admin_init', array($this->settings, 'init_settings'));
         
         // Initialize features
         foreach ($this->features as $feature) {
@@ -46,10 +52,34 @@ class Responsive_Goodies {
             }
         }
         
-        // Enqueue scripts and styles
+        // Enqueue frontend scripts and styles
         add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
     }
+	
+	    
+    /**
+     * Check if Divi builder is currently active
+     */
+    private function is_divi_builder_active() {
+        // Check for Divi builder URL parameter
+        if (isset($_GET['et_fb']) && $_GET['et_fb'] == '1') {
+            return true;
+        }
+        
+        // Check for Divi builder in admin
+        if (is_admin() && isset($_GET['et_fb'])) {
+            return true;
+        }
+        
+        // Check if we're in a Divi builder context
+        if (function_exists('et_fb_is_enabled') && et_fb_is_enabled()) {
+            return true;
+        }
+        
+        return false;
+    }
+
+
     
     public function enqueue_frontend_assets() {
         wp_enqueue_style(
