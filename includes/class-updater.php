@@ -23,6 +23,8 @@ class Responsive_Goodies_Updater {
         $this->github_repo = $github_repo;
         
         add_filter('pre_set_site_transient_update_plugins', array($this, 'check_for_update'));
+        add_filter('plugins_api', array($this, 'plugin_info'), 20, 3);
+
     }
     
     public function check_for_update($transient) {
@@ -61,5 +63,66 @@ class Responsive_Goodies_Updater {
         
         return false;
     }
+    
+    public function plugin_info($res, $action, $args) {
+        if ($action !== 'plugin_information') {
+            return false;
+        }
+        
+        if ($args->slug !== dirname($this->plugin_slug)) {
+            return false;
+        }
+        
+        $remote_version = $this->get_remote_version();
+        
+        if (!$remote_version) {
+            return false;
+        }
+        
+        $res = new stdClass();
+        $res->name = 'Responsive Goodies';
+        $res->slug = dirname($this->plugin_slug);
+        $res->version = $remote_version;
+        $res->tested = '6.4';
+        $res->requires = '5.0';
+        $res->author = 'Aidan Ashby';
+        $res->author_profile = 'https://lucidrhino.design';
+        $res->download_link = "https://github.com/{$this->github_username}/{$this->github_repo}/archive/refs/tags/v{$remote_version}.zip";
+        $res->trunk = "https://github.com/{$this->github_username}/{$this->github_repo}/archive/refs/heads/main.zip";
+        $res->homepage = "https://github.com/{$this->github_username}/{$this->github_repo}";
+        $res->last_updated = date('Y-m-d');
+        
+        $res->sections = array(
+            'description' => 'A comprehensive WordPress plugin that provides essential responsive design utilities for modern websites.',
+            'changelog' => $this->get_changelog()
+        );
+        
+        return $res;
+    }
+    
+    private function get_changelog() {
+        $request = wp_remote_get("https://api.github.com/repos/{$this->github_username}/{$this->github_repo}/releases");
+        
+        if (is_wp_error($request)) {
+            return 'View changelog on GitHub.';
+        }
+        
+        $body = wp_remote_retrieve_body($request);
+        $releases = json_decode($body, true);
+        
+        if (!$releases) {
+            return 'View changelog on GitHub.';
+        }
+        
+        $changelog = '<div>';
+        foreach (array_slice($releases, 0, 5) as $release) {
+            $changelog .= '<h4>' . esc_html($release['name']) . '</h4>';
+            $changelog .= '<p>' . wp_kses_post($release['body']) . '</p>';
+        }
+        $changelog .= '</div>';
+        
+        return $changelog;
+    }
 }
+
 ?>

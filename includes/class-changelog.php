@@ -1,6 +1,6 @@
 <?php
 /**
- * Changelog handler
+ * GitHub-based changelog handler
  */
 
 if (!defined('ABSPATH')) {
@@ -9,88 +9,88 @@ if (!defined('ABSPATH')) {
 
 class Responsive_Goodies_Changelog {
     
-    public static function get_changelog() {
-        return array(
-            '0.3.4' => array(
-                'date' => '2024-12-19',
-                'changes' => array(
-                    'Fixed: Disabled all plugin features when Divi builder is active (?et_fb=1) to prevent conflicts',
-                    'Fixed: Orphan fix feature no longer interferes with Divi 5 visual builder',
-                    'Improved: Better detection of Divi builder contexts including admin and frontend'
-                )
-            ),
-            '0.3.3' => array(
-                'date' => '2024-12-19',
-                'changes' => array(
-                    'Fixed: Divi 5 compatibility issue with Prevent Horizontal Scroll feature',
-                    'Fixed: Content width restrictions that interfered with Divi\'s responsive layout system',
-                    'Fixed: Header layout issues in Divi 5 caused by overly aggressive CSS rules',
-                    'Improved: More targeted CSS rules for preventing horizontal scroll'
-                )
-            ),
-            '0.3.2' => array(
-                'date' => '2024-12-18',
-                'changes' => array(
-                    'Fixed: Plugin settings link in WordPress plugins page',
-                    'Improved: GitHub updater integration for automatic plugin updates'
-                )
-            ),
-            '0.3.1' => array(
-                'date' => '2024-12-18',
-                'changes' => array(
-                    'Fixed: Settings page layout improvements and bug fixes'
-                )
-            ),
-            '0.3' => array(
-                'date' => '2024-12-18',
-                'changes' => array(
-                    'Added: Disable hover effects on touch devices feature',
-                    'Added: Prevent horizontal scroll feature',
-                    'Added: Back to top button visibility controls with device-specific options',
-                    'Improved: Settings page UI with toggle switches and hover tooltips',
-                    'Improved: All features organized into sectioned layout with horizontal dividers',
-                    'Updated: All features now use Divi\'s responsive breakpoints consistently'
-                )
-            ),
-            '0.2' => array(
-                'date' => '2024-12-17',
-                'changes' => array(
-                    'Added: Device-based menu display feature for controlling menu item visibility',
-                    'Added: Menu admin interface with device checkboxes in Appearance → Menus',
-                    'Improved: Settings page styling with individual feature sections',
-                    'Fixed: Orphan text logic to properly handle word count (now uses maxWords - 1 spaces)',
-                    'Updated: Orphan fix word range changed from 1-10 to 2-10'
-                )
-            ),
-            '0.1' => array(
-                'date' => '2024-12-16',
-                'changes' => array(
-                    'Initial release',
-                    'Added: Orphan text fix functionality with configurable word limits',
-                    'Added: CSS class exclusion for orphan fix',
-                    'Added: Option to apply orphan fix to headings',
-                    'Added: Basic plugin settings page',
-                    'Added: Modular plugin architecture for future feature additions'
-                )
-            )
-        );
-    }
+    private static $github_username = 'aidnashby';
+    private static $github_repo = 'responsive-goodies';
     
     public static function display_changelog() {
-        $changelog = self::get_changelog();
+        $changelog_html = self::get_github_changelog();
         
-        echo '<div class="rg-changelog">';
-        foreach ($changelog as $version => $data) {
-            echo '<div class="rg-changelog-version">';
-            echo '<h3>Version ' . esc_html($version) . ' <span class="rg-changelog-date">(' . esc_html($data['date']) . ')</span></h3>';
-            echo '<ul>';
-            foreach ($data['changes'] as $change) {
-                echo '<li>' . esc_html($change) . '</li>';
-            }
-            echo '</ul>';
-            echo '</div>';
+        if ($changelog_html) {
+            echo $changelog_html;
+        } else {
+            echo '<p>Unable to load changelog. <a href="https://github.com/' . self::$github_username . '/' . self::$github_repo . '/releases" target="_blank">View on GitHub</a></p>';
         }
-        echo '</div>';
+    }
+    
+    private static function get_github_changelog() {
+        // Check for cached changelog
+        $cached = get_transient('rg_github_changelog');
+        if ($cached !== false) {
+            return $cached;
+        }
+        
+        $request = wp_remote_get("https://api.github.com/repos/" . self::$github_username . "/" . self::$github_repo . "/releases");
+        
+        if (is_wp_error($request)) {
+            return false;
+        }
+        
+        $body = wp_remote_retrieve_body($request);
+        $releases = json_decode($body, true);
+        
+        if (!$releases || !is_array($releases)) {
+            return false;
+        }
+        
+        $html = '<div class="rg-changelog">';
+        
+        foreach ($releases as $release) {
+            if ($release['draft'] || $release['prerelease']) {
+                continue;
+            }
+            
+            $version = ltrim($release['tag_name'], 'v');
+            $date = date('Y-m-d', strtotime($release['published_at']));
+            $body = $release['body'];
+            
+            $html .= '<div class="rg-changelog-version">';
+            $html .= '<h3>Version ' . esc_html($version) . ' <span class="rg-changelog-date">(' . esc_html($date) . ')</span></h3>';
+            
+            // Convert markdown-style content to HTML
+            $body = self::convert_markdown_to_html($body);
+            $html .= '<div class="rg-changelog-content">' . wp_kses_post($body) . '</div>';
+            
+            $html .= '</div>';
+        }
+        
+        $html .= '</div>';
+        
+        // Cache for 1 hour
+        set_transient('rg_github_changelog', $html, HOUR_IN_SECONDS);
+        
+        return $html;
+    }
+    
+    private static function convert_markdown_to_html($text) {
+        // Convert markdown headers
+        $text = preg_replace('/^## (.+)$/m', '<h4>$1</h4>', $text);
+        $text = preg_replace('/^### (.+)$/m', '<h5>$1</h5>', $text);
+        
+        // Convert markdown lists
+        $text = preg_replace('/^- (.+)$/m', '<li>$1</li>', $text);
+        $text = preg_replace('/(<li>.*<\/li>)/s', '<ul>$1</ul>', $text);
+        
+        // Convert bold text
+        $text = preg_replace('/\*\*(.+?)\*\*/', '<strong>$1</strong>', $text);
+        
+        // Convert line breaks
+        $text = nl2br($text);
+        
+        return $text;
+    }
+    
+    public static function clear_changelog_cache() {
+        delete_transient('rg_github_changelog');
     }
 }
 ?>

@@ -134,10 +134,13 @@ class Responsive_Goodies {
             'back_to_top_tablet' => true,
             'back_to_top_mobile' => true
         );
-
         
         add_option('responsive_goodies_options', $default_options);
+        
+        // Clear changelog cache on activation
+        Responsive_Goodies_Changelog::clear_changelog_cache();
     }
+
     
     public static function deactivate() {
         // Clean up if needed

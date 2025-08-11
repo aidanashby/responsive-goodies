@@ -260,3 +260,41 @@ input:checked + .rg-slider:before {
     color: #0073aa;
     font-weight: bold;
 }
+
+.rg-changelog-content {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.rg-changelog-content h4,
+.rg-changelog-content h5 {
+    margin: 15px 0 8px 0;
+    color: #333;
+}
+
+.rg-changelog-content ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.rg-changelog-content li {
+    margin-bottom: 4px;
+    list-style: none;
+}
+
+.rg-changelog-content strong {
+    color: #0073aa;
+}
+
+.rg-changelog-note {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+.rg-changelog-note small {
+    color: #666;
+    font-style: italic;
+}
