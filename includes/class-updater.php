@@ -24,7 +24,7 @@ class Responsive_Goodies_Updater {
         
         add_filter('pre_set_site_transient_update_plugins', array($this, 'check_for_update'));
         add_filter('plugins_api', array($this, 'plugin_info'), 20, 3);
-
+        add_filter('upgrader_post_install', array($this, 'post_install'), 10, 3);
     }
     
     public function check_for_update($transient) {
@@ -40,7 +40,8 @@ class Responsive_Goodies_Updater {
                 'plugin' => $this->plugin_slug,
                 'new_version' => $remote_version,
                 'url' => "https://github.com/{$this->github_username}/{$this->github_repo}",
-                'package' => "https://github.com/{$this->github_username}/{$this->github_repo}/archive/refs/tags/v{$remote_version}.zip"
+                'package' => "https://github.com/{$this->github_username}/{$this->github_repo}/archive/refs/tags/v{$remote_version}.zip",
+                'upgrade_notice' => 'Backup your site before updating.'
             );
         }
         
@@ -91,11 +92,12 @@ class Responsive_Goodies_Updater {
         $res->trunk = "https://github.com/{$this->github_username}/{$this->github_repo}/archive/refs/heads/main.zip";
         $res->homepage = "https://github.com/{$this->github_username}/{$this->github_repo}";
         $res->last_updated = date('Y-m-d');
-        
         $res->sections = array(
             'description' => 'A comprehensive WordPress plugin that provides essential responsive design utilities for modern websites.',
+            'installation' => 'This plugin updates automatically. If you experience issues, deactivate and reactivate the plugin.',
             'changelog' => $this->get_changelog()
         );
+
         
         return $res;
     }
@@ -123,6 +125,24 @@ class Responsive_Goodies_Updater {
         
         return $changelog;
     }
+	    
+    public function post_install($response, $hook_extra, $result) {
+        global $wp_filesystem;
+        
+        if (!isset($hook_extra['plugin']) || $hook_extra['plugin'] !== $this->plugin_slug) {
+            return $response;
+        }
+        
+        // Move from GitHub folder structure to correct plugin folder
+        $correct_folder = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . dirname($this->plugin_slug);
+        if ($result['destination'] !== $correct_folder) {
+            $wp_filesystem->move($result['destination'], $correct_folder);
+            $result['destination'] = $correct_folder;
+        }
+        
+        return $response;
+    }
+
 }
 
 ?>
