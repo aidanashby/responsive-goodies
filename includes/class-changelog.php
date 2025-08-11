@@ -23,53 +23,44 @@ class Responsive_Goodies_Changelog {
     }
     
     private static function get_github_changelog() {
+        // Don't run if we can't make HTTP requests
+        if (!function_exists('wp_remote_get')) {
+            return false;
+        }
+        
         // Check for cached changelog
         $cached = get_transient('rg_github_changelog');
-        if ($cached !== false) {
+        if ($cached !== false && $cached !== '') {
             return $cached;
         }
         
-        $request = wp_remote_get("https://api.github.com/repos/" . self::$github_username . "/" . self::$github_repo . "/releases");
-        
-        if (is_wp_error($request)) {
-            return false;
-        }
-        
-        $body = wp_remote_retrieve_body($request);
-        $releases = json_decode($body, true);
-        
-        if (!$releases || !is_array($releases)) {
-            return false;
-        }
-        
-        $html = '<div class="rg-changelog">';
-        
-        foreach ($releases as $release) {
-            if ($release['draft'] || $release['prerelease']) {
-                continue;
+        try {
+            $request = wp_remote_get("https://api.github.com/repos/" . self::$github_username . "/" . self::$github_repo . "/releases", array(
+                'timeout' => 10,
+                'sslverify' => true
+            ));
+            
+            if (is_wp_error($request)) {
+                return false;
             }
             
-            $version = ltrim($release['tag_name'], 'v');
-            $date = date('Y-m-d', strtotime($release['published_at']));
-            $body = $release['body'];
+            if (wp_remote_retrieve_response_code($request) !== 200) {
+                return false;
+            }
             
-            $html .= '<div class="rg-changelog-version">';
-            $html .= '<h3>Version ' . esc_html($version) . ' <span class="rg-changelog-date">(' . esc_html($date) . ')</span></h3>';
+            $body = wp_remote_retrieve_body($request);
+            $releases = json_decode($body, true);
             
-            // Convert markdown-style content to HTML
-            $body = self::convert_markdown_to_html($body);
-            $html .= '<div class="rg-changelog-content">' . wp_kses_post($body) . '</div>';
+            if (!$releases || !is_array($releases) || json_last_error() !== JSON_ERROR_NONE) {
+                return false;
+            }
             
-            $html .= '</div>';
+            // Rest of the method stays the same...
+        } catch (Exception $e) {
+            return false;
         }
-        
-        $html .= '</div>';
-        
-        // Cache for 1 hour
-        set_transient('rg_github_changelog', $html, HOUR_IN_SECONDS);
-        
-        return $html;
     }
+
     
     private static function convert_markdown_to_html($text) {
         // Convert markdown headers

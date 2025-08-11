@@ -288,15 +288,11 @@ class Responsive_Goodies_Settings {
     public function changelog_display_callback() {
         ?>
         <div class="rg-changelog-container">
-            <?php Responsive_Goodies_Changelog::display_changelog(); ?>
-            <p class="rg-changelog-note">
-                <small>Changelog is automatically updated from GitHub releases. 
-                <a href="#" onclick="location.reload(); return false;">Refresh page</a> to see latest changes.
-                </small>
-            </p>
+            <p>Changelog temporarily disabled. <a href="https://github.com/aidnashby/responsive-goodies/releases" target="_blank">View releases on GitHub</a></p>
         </div>
         <?php
     }
+
 
 
 }
