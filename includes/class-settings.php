@@ -52,11 +52,16 @@ class Responsive_Goodies_Settings {
         add_settings_section('prevent_scroll_section', '', '__return_empty_string', 'responsive-goodies');
         add_settings_field('prevent_scroll_enabled', 'Prevent Horizontal Scroll', array($this, 'prevent_scroll_enabled_callback'), 'responsive-goodies', 'prevent_scroll_section');
         
-        // Back to Top Section
+                // Back to Top Section
         add_settings_section('back_to_top_section', '', '__return_empty_string', 'responsive-goodies');
         add_settings_field('back_to_top_enabled', 'Enable Back to Top Button Control', array($this, 'back_to_top_enabled_callback'), 'responsive-goodies', 'back_to_top_section');
         add_settings_field('back_to_top_devices', 'Show Back to Top Button On', array($this, 'back_to_top_devices_callback'), 'responsive-goodies', 'back_to_top_section');
+        
+        // Changelog Section
+        add_settings_section('changelog_section', '', '__return_empty_string', 'responsive-goodies');
+        add_settings_field('changelog_display', 'Plugin Changelog', array($this, 'changelog_display_callback'), 'responsive-goodies', 'changelog_section');
     }
+
     
     public function sanitize_options($input) {
         $sanitized = array();
@@ -105,9 +110,14 @@ class Responsive_Goodies_Settings {
                     <div class="rg-feature-group">
                         <?php $this->render_settings_section_fields('back_to_top_section'); ?>
                     </div>
+                    
+                    <div class="rg-feature-group rg-changelog-section">
+                        <?php $this->render_settings_section_fields('changelog_section'); ?>
+                    </div>
                 </div>
                 
                 <?php submit_button(); ?>
+
             </form>
         </div>
         <?php
@@ -273,5 +283,15 @@ class Responsive_Goodies_Settings {
         </div>
         <?php
     }
+	
+	    
+    public function changelog_display_callback() {
+        ?>
+        <div class="rg-changelog-container">
+            <?php Responsive_Goodies_Changelog::display_changelog(); ?>
+        </div>
+        <?php
+    }
+
 }
 ?>

@@ -25,6 +25,9 @@ require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-responsive-goodies.
 // Include updater
 require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-updater.php';
 
+// Include changelog
+require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-changelog.php';
+
 // Initialize updater
 if (is_admin()) {
     new Responsive_Goodies_Updater(__FILE__, 'aidanashby', 'responsive-goodies');
