@@ -23,8 +23,8 @@
             $(selectorString).each(function() {
                 var $element = $(this);
                 
-                // Skip if element has exclude class
-                if ($element.hasClass(excludeClass)) {
+                // Skip if element or any parent has exclude class
+                if ($element.hasClass(excludeClass) || $element.closest('.' + excludeClass).length > 0) {
                     return;
                 }
                 
@@ -33,21 +33,43 @@
                     return;
                 }
                 
-                var text = $element.html();
+                var textContent = $element.text();
                 
-                // Skip if text is empty or contains only HTML tags
-                if (!text || text.trim() === '' || !/\S/.test($element.text())) {
+                // Skip if text is empty
+                if (!textContent || textContent.trim() === '' || !/\S/.test(textContent)) {
                     return;
                 }
                 
-                // Find the last words in the text (fix maxWords - 1 spaces to keep maxWords together)
-                var spacesToFix = Math.max(1, maxWords - 1);
-                var lastSpaceRegex = new RegExp('\\s+(?=\\S+(?:\\s+\\S+){0,' + (spacesToFix - 1) + '}\\s*$)', 'g');
-                var fixedText = text.replace(lastSpaceRegex, '&nbsp;');
+                // Only process elements that contain direct text nodes (not just child elements)
+                var hasDirectText = false;
+                $element.contents().each(function() {
+                    if (this.nodeType === 3 && $(this).text().trim() !== '') { // Text node
+                        hasDirectText = true;
+                        return false;
+                    }
+                });
                 
-                if (fixedText !== text) {
-                    $element.html(fixedText);
+                if (!hasDirectText) {
+                    return;
                 }
+                
+                // Process each text node separately
+                $element.contents().each(function() {
+                    if (this.nodeType === 3) { // Text node
+                        var text = $(this).text();
+                        if (text.trim() !== '') {
+                            // Find the last words in the text
+                            var spacesToFix = Math.max(1, maxWords - 1);
+                            var lastSpaceRegex = new RegExp('\\s+(?=\\S+(?:\\s+\\S+){0,' + (spacesToFix - 1) + '}\\s*$)', 'g');
+                            var fixedText = text.replace(lastSpaceRegex, '\u00A0'); // Use Unicode non-breaking space
+                            
+                            if (fixedText !== text) {
+                                $(this).replaceWith(document.createTextNode(fixedText));
+                            }
+                        }
+                    }
+                });
+
             });
         }
         
@@ -62,10 +84,14 @@
                 // Reset any existing fixes first
                 $(selectorString).each(function() {
                     var $element = $(this);
-                    var html = $element.html();
-                    if (html && html.indexOf('&nbsp;') !== -1) {
-                        $element.html(html.replace(/&nbsp;/g, ' '));
-                    }
+                    $element.contents().each(function() {
+                        if (this.nodeType === 3) { // Text node
+                            var text = $(this).text();
+                            if (text.indexOf('\u00A0') !== -1) {
+                                $(this).replaceWith(document.createTextNode(text.replace(/\u00A0/g, ' ')));
+                            }
+                        }
+                    });
                 });
                 
                 // Reapply fixes

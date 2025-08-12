@@ -36,7 +36,7 @@ class Responsive_Goodies_Settings {
         add_settings_section('orphan_fix_section', '', '__return_empty_string', 'responsive-goodies');
         
         add_settings_field('orphan_fix_enabled', 'Enable Orphan Fix', array($this, 'orphan_fix_enabled_callback'), 'responsive-goodies', 'orphan_fix_section');
-        add_settings_field('orphan_fix_max_words', 'Maximum Hanging Words', array($this, 'orphan_fix_max_words_callback'), 'responsive-goodies', 'orphan_fix_section');
+        add_settings_field('orphan_fix_max_words', 'Minimum Paragraph Widow Words', array($this, 'orphan_fix_max_words_callback'), 'responsive-goodies', 'orphan_fix_section');
         add_settings_field('orphan_fix_exclude_class', 'Exclude CSS Class', array($this, 'orphan_fix_exclude_class_callback'), 'responsive-goodies', 'orphan_fix_section');
         add_settings_field('orphan_fix_apply_headings', 'Apply to Headings', array($this, 'orphan_fix_apply_headings_callback'), 'responsive-goodies', 'orphan_fix_section');
         
@@ -156,7 +156,7 @@ class Responsive_Goodies_Settings {
         </label>
         <div class="rg-tooltip">
             <span class="rg-tooltip-icon">?</span>
-            <span class="rg-tooltip-text">Prevent orphan words at the end of text blocks by adding non-breaking spaces</span>
+            <span class="rg-tooltip-text">Minimum number of words required on the last line before orphan fix is applied (2-10)</span>
         </div>
         <?php
     }
