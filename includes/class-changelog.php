@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 
 class Responsive_Goodies_Changelog {
     
-    private static $github_username = 'aidnashby';
+    private static $github_username = 'aidanashby';
     private static $github_repo = 'responsive-goodies';
     
     public static function display_changelog() {
