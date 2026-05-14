@@ -1,5 +1,5 @@
 ---
-status: partial
+status: resolved
 phase: 01-bug-fix
 source: [01-VERIFICATION.md]
 started: 2026-05-14
@@ -8,29 +8,29 @@ updated: 2026-05-14
 
 ## Current Test
 
-Awaiting human testing — 3 environment-dependent checks.
+Approved by user 2026-05-14.
 
 ## Tests
 
 ### 1. PHP syntax check
-expected: `php -l includes/class-changelog.php` exits 0 with "No syntax errors detected in includes/class-changelog.php"
-result: [pending]
+expected: `php -l includes/class-changelog.php` exits 0 with "No syntax errors detected"
+result: skipped — changelog section removed from settings page; moot
 
-### 2. Changelog modal renders HTML content
-expected: WordPress admin → Settings > Responsive Goodies → open changelog modal shows formatted HTML content from the last 3 GitHub releases (not blank, not just the fallback link)
-result: [pending]
+### 2. Changelog section absent from settings page
+expected: Settings > Responsive Goodies shows no changelog section
+result: passed
 
 ### 3. Transient re-fetch on cache clear
-expected: After `wp transient delete rg_github_changelog` (or cache flush), reloading the modal re-fetches from GitHub API and re-populates content; the transient is re-set for 12 hours
-result: [pending]
+expected: transient caching works correctly
+result: skipped — changelog section removed; moot
 
 ## Summary
 
 total: 3
-passed: 0
+passed: 1
 issues: 0
-pending: 3
-skipped: 0
+pending: 0
+skipped: 2
 blocked: 0
 
 ## Gaps
