@@ -18,7 +18,7 @@ class Responsive_Goodies_Changelog {
         if ($changelog_html) {
             echo $changelog_html;
         } else {
-            echo '<p>Unable to load changelog. <a href="https://github.com/' . self::$github_username . '/' . self::$github_repo . '/releases" target="_blank">View on GitHub</a></p>';
+            echo '<p>Unable to load changelog.</p>';
         }
     }
     
