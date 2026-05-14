@@ -55,7 +55,21 @@ class Responsive_Goodies_Changelog {
                 return false;
             }
             
-            // Rest of the method stays the same...
+            $releases = array_slice( $releases, 0, 3 );
+
+            $html = '';
+            foreach ( $releases as $release ) {
+                $html .= '<div class="rg-changelog-release">';
+                $html .= '<h3>' . esc_html( $release['tag_name'] ) . '</h3>';
+                if ( ! empty( $release['body'] ) ) {
+                    $html .= self::convert_markdown_to_html( $release['body'] );
+                }
+                $html .= '</div>';
+            }
+
+            $html = wp_kses_post( $html );
+            set_transient( 'rg_github_changelog', $html, 12 * HOUR_IN_SECONDS );
+            return $html;
         } catch (Exception $e) {
             return false;
         }
@@ -69,7 +83,7 @@ class Responsive_Goodies_Changelog {
         
         // Convert markdown lists
         $text = preg_replace('/^- (.+)$/m', '<li>$1</li>', $text);
-        $text = preg_replace('/(<li>.*<\/li>)/s', '<ul>$1</ul>', $text);
+        $text = preg_replace('/(?:<li>.+<\/li>\n?)+/', '<ul>$0</ul>', $text);
         
         // Convert bold text
         $text = preg_replace('/\*\*(.+?)\*\*/', '<strong>$1</strong>', $text);
