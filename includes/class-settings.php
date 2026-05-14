@@ -57,9 +57,6 @@ class Responsive_Goodies_Settings {
         add_settings_field('back_to_top_enabled', 'Enable Back to Top Button Control', array($this, 'back_to_top_enabled_callback'), 'responsive-goodies', 'back_to_top_section');
         add_settings_field('back_to_top_devices', 'Show Back to Top Button On', array($this, 'back_to_top_devices_callback'), 'responsive-goodies', 'back_to_top_section');
         
-        // Changelog Section
-        add_settings_section('changelog_section', '', '__return_empty_string', 'responsive-goodies');
-        add_settings_field('changelog_display', 'Plugin Changelog', array($this, 'changelog_display_callback'), 'responsive-goodies', 'changelog_section');
     }
 
     
@@ -111,9 +108,6 @@ class Responsive_Goodies_Settings {
                         <?php $this->render_settings_section_fields('back_to_top_section'); ?>
                     </div>
                     
-                    <div class="rg-feature-group rg-changelog-section">
-                        <?php $this->render_settings_section_fields('changelog_section'); ?>
-                    </div>
                 </div>
                 
                 <?php submit_button(); ?>
@@ -285,15 +279,6 @@ class Responsive_Goodies_Settings {
     }
 	
 	    
-    public function changelog_display_callback() {
-        ?>
-        <div class="rg-changelog-container">
-            <p>Changelog temporarily disabled. <a href="https://github.com/aidnashby/responsive-goodies/releases" target="_blank">View releases on GitHub</a></p>
-        </div>
-        <?php
-    }
-
-
-
 }
+
 ?>
