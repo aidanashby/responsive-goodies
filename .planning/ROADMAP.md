@@ -12,7 +12,7 @@ A sequential quality pass on Responsive Goodies v0.3.8 — fixing one confirmed 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Bug Fix** - Fix the changelog modal so it renders HTML content correctly
+- [x] **Phase 1: Bug Fix** - Fix the changelog modal so it renders HTML content correctly
 - [ ] **Phase 2: Naming Consistency** - Lock class, hook, and options key naming before any structural changes
 - [ ] **Phase 3: Dead Code + Capability Checks** - Remove dead code and gate all admin-only actions
 - [ ] **Phase 4: PHP 8.x Modernisation** - Apply typed properties, return types, match, nullsafe, and ?? throughout
@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. On API failure the modal renders a fallback GitHub link rather than blank content
 **Plans**: 1 plan
 Plans:
-- [ ] 01-01-PLAN.md — Fix convert_markdown_to_html() ul regex and complete get_github_changelog()
+- [x] 01-01-PLAN.md — Fix convert_markdown_to_html() ul regex and complete get_github_changelog()
 
 ### Phase 2: Naming Consistency
 **Goal**: All class names, hook registrations, and options field names follow a single consistent convention — locked in place before typed properties or annotations are added
@@ -93,7 +93,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Bug Fix | 0/1 | Not started | - |
+| 1. Bug Fix | 1/1 | Complete | 2026-05-14 |
 | 2. Naming Consistency | 0/? | Not started | - |
 | 3. Dead Code + Capability Checks | 0/? | Not started | - |
 | 4. PHP 8.x Modernisation | 0/? | Not started | - |
