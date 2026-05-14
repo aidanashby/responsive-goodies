@@ -29,7 +29,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. The changelog modal displays formatted HTML content from the GitHub API response
   2. The `rg_github_changelog` transient is set with a 12-hour TTL on successful API response
   3. On API failure the modal renders a fallback GitHub link rather than blank content
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 01-01-PLAN.md — Fix convert_markdown_to_html() ul regex and complete get_github_changelog()
 
 ### Phase 2: Naming Consistency
 **Goal**: All class names, hook registrations, and options field names follow a single consistent convention — locked in place before typed properties or annotations are added
@@ -91,7 +93,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Bug Fix | 0/? | Not started | - |
+| 1. Bug Fix | 0/1 | Not started | - |
 | 2. Naming Consistency | 0/? | Not started | - |
 | 3. Dead Code + Capability Checks | 0/? | Not started | - |
 | 4. PHP 8.x Modernisation | 0/? | Not started | - |
