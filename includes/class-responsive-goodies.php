@@ -127,7 +127,7 @@ class Responsive_Goodies {
 
     
     public static function deactivate() {
-        // Clean up if needed
+        // Intentionally empty — deactivation requires no cleanup for this plugin.
     }
 }
 ?>
