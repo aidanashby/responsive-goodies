@@ -31,7 +31,7 @@ class Responsive_Goodies_Orphan_Fix {
             RESPONSIVE_GOODIES_PLUGIN_URL . 'includes/features/orphan-fix/orphan-fix.js',
             array('jquery'),
             RESPONSIVE_GOODIES_VERSION,
-            true
+            array( 'strategy' => 'defer', 'in_footer' => true )
         );
         
         // Pass settings to JavaScript
