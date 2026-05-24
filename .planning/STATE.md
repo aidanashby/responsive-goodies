@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-05-14)
 
 **Core value:** Every feature works correctly and the codebase is maintainable — naming is consistent, capability checks are in place, dead code is gone, obvious documentation gaps are filled, and the confirmed changelog bug is fixed.
-**Current focus:** Phase 5 — Performance + Asset Loading
+**Current focus:** Phase 6 — Docs + Release
 
 ## Current Position
 
-Phase: 5 of 6 (Performance + Asset Loading)
-Plan: 1 of 1 in current phase
-Status: Phase complete — verifying
-Last activity: 2026-05-24 — Phase 5 plan 05-01 complete (transient guards, conditional enqueue, defer strategy)
+Phase: 6 of 6 (Docs + Release)
+Plan: 0 of 1 in current phase
+Status: Ready to execute
+Last activity: 2026-05-24 — Phase 5 complete (transient guards, conditional enqueue, defer; 5/5 verified)
 
 Progress: [███░░░░░░░] 50%
 
