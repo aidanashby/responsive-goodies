@@ -49,19 +49,26 @@ class Responsive_Goodies_Updater {
     }
     
     private function get_remote_version(): string|false {
+        $cached = get_transient( 'rg_update_check' );
+        if ( false !== $cached ) {
+            return $cached;
+        }
+
         $request = wp_remote_get("https://api.github.com/repos/{$this->github_username}/{$this->github_repo}/releases/latest");
-        
+
         if (is_wp_error($request)) {
             return false;
         }
-        
+
         $body = wp_remote_retrieve_body($request);
         $data = json_decode($body, true);
-        
+
         if (isset($data['tag_name'])) {
-            return ltrim($data['tag_name'], 'v');
+            $version = ltrim($data['tag_name'], 'v');
+            set_transient( 'rg_update_check', $version, 6 * HOUR_IN_SECONDS );
+            return $version;
         }
-        
+
         return false;
     }
     
@@ -103,26 +110,32 @@ class Responsive_Goodies_Updater {
     }
     
     private function get_changelog(): string {
+        $cached = get_transient( 'rg_changelog_info' );
+        if ( false !== $cached ) {
+            return $cached;
+        }
+
         $request = wp_remote_get("https://api.github.com/repos/{$this->github_username}/{$this->github_repo}/releases");
-        
+
         if (is_wp_error($request)) {
             return 'View changelog on GitHub.';
         }
-        
+
         $body = wp_remote_retrieve_body($request);
         $releases = json_decode($body, true);
-        
+
         if (!$releases) {
             return 'View changelog on GitHub.';
         }
-        
+
         $changelog = '<div>';
         foreach (array_slice($releases, 0, 5) as $release) {
             $changelog .= '<h4>' . esc_html($release['name']) . '</h4>';
             $changelog .= '<p>' . wp_kses_post($release['body']) . '</p>';
         }
         $changelog .= '</div>';
-        
+
+        set_transient( 'rg_changelog_info', $changelog, 12 * HOUR_IN_SECONDS );
         return $changelog;
     }
 	    
