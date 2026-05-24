@@ -142,7 +142,7 @@ class Responsive_Goodies_Settings {
     }
     
     public function orphan_fix_enabled_callback() {
-        $enabled = isset($this->options['orphan_fix_enabled']) ? $this->options['orphan_fix_enabled'] : false;
+        $enabled = $this->options['orphan_fix_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
             <input type="checkbox" name="responsive_goodies_options[orphan_fix_enabled]" value="1" <?php checked($enabled); ?> />
@@ -156,7 +156,7 @@ class Responsive_Goodies_Settings {
     }
     
     public function orphan_fix_max_words_callback() {
-        $max_words = isset($this->options['orphan_fix_max_words']) ? $this->options['orphan_fix_max_words'] : 2;
+        $max_words = $this->options['orphan_fix_max_words'] ?? 2;
         ?>
         <input type="number" name="responsive_goodies_options[orphan_fix_max_words]" value="<?php echo esc_attr($max_words); ?>" min="2" max="10" />
         <div class="rg-tooltip">
@@ -167,7 +167,7 @@ class Responsive_Goodies_Settings {
     }
     
     public function orphan_fix_exclude_class_callback() {
-        $exclude_class = isset($this->options['orphan_fix_exclude_class']) ? $this->options['orphan_fix_exclude_class'] : 'no-orphan-fix';
+        $exclude_class = $this->options['orphan_fix_exclude_class'] ?? 'no-orphan-fix';
         ?>
         <input type="text" name="responsive_goodies_options[orphan_fix_exclude_class]" value="<?php echo esc_attr($exclude_class); ?>" class="regular-text" />
         <div class="rg-tooltip">
@@ -178,7 +178,7 @@ class Responsive_Goodies_Settings {
     }
     
     public function orphan_fix_apply_headings_callback() {
-        $apply_headings = isset($this->options['orphan_fix_apply_headings']) ? $this->options['orphan_fix_apply_headings'] : true;
+        $apply_headings = $this->options['orphan_fix_apply_headings'] ?? true;
         ?>
         <label class="rg-toggle-switch">
             <input type="checkbox" name="responsive_goodies_options[orphan_fix_apply_headings]" value="1" <?php checked($apply_headings); ?> />
@@ -192,7 +192,7 @@ class Responsive_Goodies_Settings {
     }
     
     public function device_menu_enabled_callback() {
-        $enabled = isset($this->options['device_menu_enabled']) ? $this->options['device_menu_enabled'] : false;
+        $enabled = $this->options['device_menu_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
             <input type="checkbox" name="responsive_goodies_options[device_menu_enabled]" value="1" <?php checked($enabled); ?> />
@@ -206,7 +206,7 @@ class Responsive_Goodies_Settings {
     }
     
     public function disable_hover_enabled_callback() {
-        $enabled = isset($this->options['disable_hover_enabled']) ? $this->options['disable_hover_enabled'] : false;
+        $enabled = $this->options['disable_hover_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
             <input type="checkbox" name="responsive_goodies_options[disable_hover_enabled]" value="1" <?php checked($enabled); ?> />
@@ -220,7 +220,7 @@ class Responsive_Goodies_Settings {
     }
     
     public function prevent_scroll_enabled_callback() {
-        $enabled = isset($this->options['prevent_scroll_enabled']) ? $this->options['prevent_scroll_enabled'] : false;
+        $enabled = $this->options['prevent_scroll_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
             <input type="checkbox" name="responsive_goodies_options[prevent_scroll_enabled]" value="1" <?php checked($enabled); ?> />
@@ -234,7 +234,7 @@ class Responsive_Goodies_Settings {
     }
     
     public function back_to_top_enabled_callback() {
-        $enabled = isset($this->options['back_to_top_enabled']) ? $this->options['back_to_top_enabled'] : false;
+        $enabled = $this->options['back_to_top_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
             <input type="checkbox" name="responsive_goodies_options[back_to_top_enabled]" value="1" <?php checked($enabled); ?> />
@@ -248,9 +248,9 @@ class Responsive_Goodies_Settings {
     }
     
     public function back_to_top_devices_callback() {
-        $desktop = isset($this->options['back_to_top_desktop']) ? $this->options['back_to_top_desktop'] : true;
-        $tablet = isset($this->options['back_to_top_tablet']) ? $this->options['back_to_top_tablet'] : true;
-        $mobile = isset($this->options['back_to_top_mobile']) ? $this->options['back_to_top_mobile'] : true;
+        $desktop = $this->options['back_to_top_desktop'] ?? true;
+        $tablet = $this->options['back_to_top_tablet'] ?? true;
+        $mobile = $this->options['back_to_top_mobile'] ?? true;
         ?>
         <div class="rg-device-checkboxes">
             <div class="rg-device-toggle">
