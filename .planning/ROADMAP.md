@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Naming Consistency** - Lock class, hook, and options key naming before any structural changes
 - [x] **Phase 3: Dead Code + Capability Checks** - Remove dead code and gate all admin-only actions
 - [x] **Phase 4: PHP 8.x Modernisation** - Apply typed properties, return types, match, nullsafe, and ?? throughout
-- [ ] **Phase 5: Performance + Asset Loading** - Conditionally enqueue assets and add transient guards
+- [x] **Phase 5: Performance + Asset Loading** - Conditionally enqueue assets and add transient guards
 - [ ] **Phase 6: Docs + Release** - Fill PHPDoc gaps, strip debug statements, update changelog, bump version
 
 ## Phase Details
@@ -104,5 +104,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Naming Consistency | 1/1 | Complete | 2026-05-24 |
 | 3. Dead Code + Capability Checks | 1/1 | Complete | 2026-05-24 |
 | 4. PHP 8.x Modernisation | 1/1 | Complete | 2026-05-24 |
-| 5. Performance + Asset Loading | 0/1 | In progress | - |
+| 5. Performance + Asset Loading | 1/1 | Complete | 2026-05-24 |
 | 6. Docs + Release | 0/1 | Ready to execute | - |
