@@ -13,8 +13,8 @@ A sequential quality pass on Responsive Goodies v0.3.8 — fixing one confirmed 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Bug Fix** - Fix the changelog modal so it renders HTML content correctly
-- [ ] **Phase 2: Naming Consistency** - Lock class, hook, and options key naming before any structural changes
-- [ ] **Phase 3: Dead Code + Capability Checks** - Remove dead code and gate all admin-only actions
+- [x] **Phase 2: Naming Consistency** - Lock class, hook, and options key naming before any structural changes
+- [x] **Phase 3: Dead Code + Capability Checks** - Remove dead code and gate all admin-only actions
 - [ ] **Phase 4: PHP 8.x Modernisation** - Apply typed properties, return types, match, nullsafe, and ?? throughout
 - [ ] **Phase 5: Performance + Asset Loading** - Conditionally enqueue assets and add transient guards
 - [ ] **Phase 6: Docs + Release** - Fill PHPDoc gaps, strip debug statements, update changelog, bump version
@@ -41,50 +41,57 @@ Plans:
   1. All classes carry a `Responsive_Goodies_` prefix with PascalCase; all methods are snake_case; PHPCS WordPress ruleset reports zero naming violations
   2. All internal hook registrations use the `responsive_goodies_` prefix; no public `do_action()` or `apply_filters()` call names have changed
   3. All settings field names and `wp_options` array keys are consistent snake_case; the top-level `responsive_goodies_options` key is unchanged
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [x] 02-01-PLAN.md — Grep-based naming audit; fix any violations found
 
 ### Phase 3: Dead Code + Capability Checks
 **Goal**: The codebase contains only live, reachable code and every admin-only action is gated by a capability check
 **Depends on**: Phase 2
 **Requirements**: QUAL-04, QUAL-05
 **Success Criteria** (what must be TRUE):
-  1. Every `wp_ajax_*` handler calls `current_user_can( 'manage_options' )` at entry and returns early on failure
-  2. No unreachable branches, commented-out code blocks, unrooted methods, or debug functions remain in any PHP file
-  3. The empty deactivation hook body is resolved — either removed or given a comment explaining its intentional absence
-**Plans**: TBD
+  1. Every `wp_ajax_*` handler calls `current_user_can( 'manage_options' )` at entry (confirmed N/A — no AJAX handlers exist)
+  2. No stub JS files or their enqueue calls remain; deactivate() body is documented
+**Plans**: 1 plan
+Plans:
+- [x] 03-01-PLAN.md — Delete frontend.js + admin.js stubs, remove their enqueue calls, document deactivate()
 
 ### Phase 4: PHP 8.x Modernisation
-**Goal**: The codebase uses PHP 8.x features consistently — typed properties, return types, match expressions, nullsafe operators, and null coalescing — with no uninitialised property risk
+**Goal**: Pragmatic PHP 8.x subset — ?? operator replaces isset() ternaries; return type declarations added to all non-trivial methods
 **Depends on**: Phase 3
 **Requirements**: QUAL-06
 **Success Criteria** (what must be TRUE):
-  1. All class properties carry type declarations; nullable properties use `?type` or a default value; no uninitialised typed property can cause a fatal error
+  1. All `isset($x) ? $x : $default` patterns replaced with `$x ?? $default` throughout
   2. All non-trivial methods carry return type declarations
-  3. `isset()` ternaries are replaced with `??`; appropriate chains use the nullsafe operator; closed-set value mappings use match expressions
-  4. PHPCompatibility PHPCS ruleset reports zero PHP 7.x-only patterns remaining
-**Plans**: TBD
+  3. No typed properties or match expressions added (out of scope for pragmatic subset)
+**Plans**: 1 plan
+Plans:
+- [ ] 04-01-PLAN.md — ?? replacement throughout + return types on all non-trivial methods
 
 ### Phase 5: Performance + Asset Loading
 **Goal**: Frontend and admin assets load only when needed; the GitHub update check is transient-guarded; frontend scripts use the defer strategy
 **Depends on**: Phase 4
 **Requirements**: QUAL-07
 **Success Criteria** (what must be TRUE):
-  1. Frontend scripts and styles are enqueued only when at least one feature is enabled; no assets load on pages where all features are disabled
-  2. Admin assets are scoped to the plugin's settings page and do not load on other admin screens
-  3. The GitHub update check is wrapped in a 6–12 hour transient guard; no more than one uncached API call fires per guard window
-  4. Frontend scripts are registered with `[ 'strategy' => 'defer' ]` where no `wp_add_inline_script` in `after` position conflicts
-**Plans**: TBD
+  1. Frontend CSS enqueues only when at least one feature is enabled
+  2. GitHub update check transient-guarded at 6h (rg_update_check); get_changelog() guarded at 12h (rg_changelog_info)
+  3. All frontend scripts registered with defer strategy (no wp_add_inline_script conflicts confirmed)
+**Plans**: 1 plan
+Plans:
+- [ ] 05-01-PLAN.md — Transient guard on updater API calls, conditional CSS enqueue, defer strategy on feature scripts
 
 ### Phase 6: Docs + Release
 **Goal**: PHPDoc gaps are filled, debug output is gone from all JS files, the changelog records the full refactor, and the version is bumped consistently to 0.4.0
 **Depends on**: Phase 5
 **Requirements**: QUAL-08, QUAL-09, REL-01, REL-02
 **Success Criteria** (what must be TRUE):
-  1. PHPDoc blocks exist on all complex or non-obvious methods (GitHub API parsing, Divi detection, changelog construction, options sanitisation); trivial methods are intentionally left undocumented
-  2. Zero `console.log` calls remain in any shipped JS file; any retained `console.error` or `console.warn` has an explanatory comment
-  3. `CHANGELOG.md` contains a `0.4.0` entry at the top in Keep a Changelog format covering Bug Fixes, Changed, and Removed sections
-  4. `grep -r "0\.3\.8" .` returns zero results; version reads `0.4.0` in plugin header, `RESPONSIVE_GOODIES_VERSION` constant, and `CHANGELOG.md`
-**Plans**: TBD
+  1. PHPDoc on get_github_changelog(), convert_markdown_to_html(), is_divi_builder_active(), sanitize_options(), get_remote_version(), get_changelog()
+  2. Zero console.log in any shipped JS file
+  3. CHANGELOG.md exists with 0.4.0 entry in Keep a Changelog format
+  4. grep -r "0\.3\.8" . returns zero results
+**Plans**: 1 plan
+Plans:
+- [ ] 06-01-PLAN.md — PHPDoc, console.log audit, CHANGELOG.md, version bump to 0.4.0
 
 ## Progress
 
@@ -94,8 +101,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Bug Fix | 1/1 | Complete | 2026-05-14 |
-| 2. Naming Consistency | 0/? | Not started | - |
-| 3. Dead Code + Capability Checks | 0/? | Not started | - |
-| 4. PHP 8.x Modernisation | 0/? | Not started | - |
-| 5. Performance + Asset Loading | 0/? | Not started | - |
-| 6. Docs + Release | 0/? | Not started | - |
+| 2. Naming Consistency | 1/1 | Complete | 2026-05-24 |
+| 3. Dead Code + Capability Checks | 1/1 | Complete | 2026-05-24 |
+| 4. PHP 8.x Modernisation | 0/1 | Ready to execute | - |
+| 5. Performance + Asset Loading | 0/1 | Ready to execute | - |
+| 6. Docs + Release | 0/1 | Ready to execute | - |

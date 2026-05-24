@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-05-14)
 
 **Core value:** Every feature works correctly and the codebase is maintainable — naming is consistent, capability checks are in place, dead code is gone, obvious documentation gaps are filled, and the confirmed changelog bug is fixed.
-**Current focus:** Phase 2 — Naming Consistency
+**Current focus:** Phase 3 — Dead Code + Capability Checks
 
 ## Current Position
 
-Phase: 2 of 6 (Naming Consistency)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-05-14 — Phase 1 complete (1/1 plans)
+Phase: 3 of 6 (Dead Code + Capability Checks)
+Plan: 1 of 1 in current phase
+Status: Phase complete — verifying
+Last activity: 2026-05-24 — Phase 3 plan 03-01 complete (stubs deleted, QUAL-04 N/A confirmed)
 
-Progress: [█░░░░░░░░░] 17%
+Progress: [██░░░░░░░░] 33%
 
 ## Performance Metrics
 
@@ -54,7 +54,7 @@ None yet.
 ### Blockers/Concerns
 
 - Research flags four pre-execution questions to resolve during relevant phases:
-  - Phase 3: Is `frontend.js` an empty stub or does it serve a purpose?
+  - Phase 3: ~~Is `frontend.js` an empty stub or does it serve a purpose?~~ Resolved — confirmed stub, deleted.
   - Phase 5: Any `wp_add_inline_script` calls in `after` position that would conflict with defer strategy?
   - Phase 5: Does `class-settings.php` output any `<div class="notice">` admin notices?
   - Phase 4: Do `class-updater.php` or `class-changelog.php` accept constructor parameters?
