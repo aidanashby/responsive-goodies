@@ -43,9 +43,9 @@ class Responsive_Goodies_Back_To_Top {
     private function generate_device_css() {
         $css = '';
         
-        $desktop = isset($this->options['back_to_top_desktop']) ? $this->options['back_to_top_desktop'] : true;
-        $tablet = isset($this->options['back_to_top_tablet']) ? $this->options['back_to_top_tablet'] : true;
-        $mobile = isset($this->options['back_to_top_mobile']) ? $this->options['back_to_top_mobile'] : true;
+        $desktop = $this->options['back_to_top_desktop'] ?? true;
+        $tablet = $this->options['back_to_top_tablet'] ?? true;
+        $mobile = $this->options['back_to_top_mobile'] ?? true;
         
         // Desktop: 981px and above
         if (!$desktop) {

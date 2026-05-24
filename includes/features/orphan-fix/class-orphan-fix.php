@@ -36,9 +36,9 @@ class Responsive_Goodies_Orphan_Fix {
         
         // Pass settings to JavaScript
         $script_data = array(
-            'maxWords' => isset($this->options['orphan_fix_max_words']) ? $this->options['orphan_fix_max_words'] : 2,
-            'excludeClass' => isset($this->options['orphan_fix_exclude_class']) ? $this->options['orphan_fix_exclude_class'] : 'no-orphan-fix',
-            'applyHeadings' => isset($this->options['orphan_fix_apply_headings']) ? $this->options['orphan_fix_apply_headings'] : true
+            'maxWords' => $this->options['orphan_fix_max_words'] ?? 2,
+            'excludeClass' => $this->options['orphan_fix_exclude_class'] ?? 'no-orphan-fix',
+            'applyHeadings' => $this->options['orphan_fix_apply_headings'] ?? true
         );
         
         wp_localize_script('responsive-goodies-orphan-fix', 'responsiveGoodiesOrphanFix', $script_data);
