@@ -88,14 +88,6 @@ class Responsive_Goodies {
             array(),
             RESPONSIVE_GOODIES_VERSION
         );
-        
-        wp_enqueue_script(
-            'responsive-goodies-frontend',
-            RESPONSIVE_GOODIES_PLUGIN_URL . 'assets/js/frontend.js',
-            array('jquery'),
-            RESPONSIVE_GOODIES_VERSION,
-            true
-        );
     }
     
     public function enqueue_admin_assets($hook) {
@@ -108,14 +100,6 @@ class Responsive_Goodies {
             RESPONSIVE_GOODIES_PLUGIN_URL . 'admin/css/admin.css',
             array(),
             RESPONSIVE_GOODIES_VERSION
-        );
-        
-        wp_enqueue_script(
-            'responsive-goodies-admin',
-            RESPONSIVE_GOODIES_PLUGIN_URL . 'admin/js/admin.js',
-            array('jquery'),
-            RESPONSIVE_GOODIES_VERSION,
-            true
         );
     }
     
