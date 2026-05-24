@@ -15,7 +15,7 @@ class Responsive_Goodies_Settings {
         $this->options = get_option('responsive_goodies_options');
     }
     
-    public function add_admin_menu() {
+    public function add_admin_menu(): void {
         add_options_page(
             'Responsive Goodies Settings',
             'Responsive Goodies',
@@ -25,7 +25,7 @@ class Responsive_Goodies_Settings {
         );
     }
     
-    public function init_settings() {
+    public function init_settings(): void {
         register_setting(
             'responsive_goodies_settings',
             'responsive_goodies_options',
@@ -60,7 +60,7 @@ class Responsive_Goodies_Settings {
     }
 
     
-    public function sanitize_options($input) {
+    public function sanitize_options(array $input): array {
         $sanitized = array();
         
         $sanitized['orphan_fix_enabled'] = isset($input['orphan_fix_enabled']) ? true : false;
@@ -80,7 +80,7 @@ class Responsive_Goodies_Settings {
         return $sanitized;
     }
     
-    public function settings_page() {
+    public function settings_page(): void {
         ?>
         <div class="wrap responsive-goodies-admin">
             <h1>Responsive Goodies Settings</h1>
@@ -118,7 +118,7 @@ class Responsive_Goodies_Settings {
     }
 
     
-    private function render_settings_section_fields($section) {
+    private function render_settings_section_fields(string $section): void {
         global $wp_settings_fields;
         
         if (!isset($wp_settings_fields['responsive-goodies'][$section])) {
@@ -141,7 +141,7 @@ class Responsive_Goodies_Settings {
         echo '</table>';
     }
     
-    public function orphan_fix_enabled_callback() {
+    public function orphan_fix_enabled_callback(): void {
         $enabled = $this->options['orphan_fix_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
@@ -155,7 +155,7 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
-    public function orphan_fix_max_words_callback() {
+    public function orphan_fix_max_words_callback(): void {
         $max_words = $this->options['orphan_fix_max_words'] ?? 2;
         ?>
         <input type="number" name="responsive_goodies_options[orphan_fix_max_words]" value="<?php echo esc_attr($max_words); ?>" min="2" max="10" />
@@ -166,7 +166,7 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
-    public function orphan_fix_exclude_class_callback() {
+    public function orphan_fix_exclude_class_callback(): void {
         $exclude_class = $this->options['orphan_fix_exclude_class'] ?? 'no-orphan-fix';
         ?>
         <input type="text" name="responsive_goodies_options[orphan_fix_exclude_class]" value="<?php echo esc_attr($exclude_class); ?>" class="regular-text" />
@@ -177,7 +177,7 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
-    public function orphan_fix_apply_headings_callback() {
+    public function orphan_fix_apply_headings_callback(): void {
         $apply_headings = $this->options['orphan_fix_apply_headings'] ?? true;
         ?>
         <label class="rg-toggle-switch">
@@ -191,7 +191,7 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
-    public function device_menu_enabled_callback() {
+    public function device_menu_enabled_callback(): void {
         $enabled = $this->options['device_menu_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
@@ -205,7 +205,7 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
-    public function disable_hover_enabled_callback() {
+    public function disable_hover_enabled_callback(): void {
         $enabled = $this->options['disable_hover_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
@@ -219,7 +219,7 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
-    public function prevent_scroll_enabled_callback() {
+    public function prevent_scroll_enabled_callback(): void {
         $enabled = $this->options['prevent_scroll_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
@@ -233,7 +233,7 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
-    public function back_to_top_enabled_callback() {
+    public function back_to_top_enabled_callback(): void {
         $enabled = $this->options['back_to_top_enabled'] ?? false;
         ?>
         <label class="rg-toggle-switch">
@@ -247,7 +247,7 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
-    public function back_to_top_devices_callback() {
+    public function back_to_top_devices_callback(): void {
         $desktop = $this->options['back_to_top_desktop'] ?? true;
         $tablet = $this->options['back_to_top_tablet'] ?? true;
         $mobile = $this->options['back_to_top_mobile'] ?? true;

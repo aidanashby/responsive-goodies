@@ -15,17 +15,17 @@ class Responsive_Goodies_Back_To_Top {
         $this->options = get_option('responsive_goodies_options');
     }
     
-    public function init() {
+    public function init(): void {
         if ($this->is_enabled()) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
         }
     }
     
-    private function is_enabled() {
+    private function is_enabled(): bool {
         return isset($this->options['back_to_top_enabled']) && $this->options['back_to_top_enabled'];
     }
     
-    public function enqueue_styles() {
+    public function enqueue_styles(): void {
         wp_enqueue_style(
             'responsive-goodies-back-to-top',
             RESPONSIVE_GOODIES_PLUGIN_URL . 'includes/features/back-to-top/back-to-top.css',
@@ -40,7 +40,7 @@ class Responsive_Goodies_Back_To_Top {
         }
     }
     
-    private function generate_device_css() {
+    private function generate_device_css(): string {
         $css = '';
         
         $desktop = $this->options['back_to_top_desktop'] ?? true;

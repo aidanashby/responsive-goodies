@@ -15,7 +15,7 @@ class Responsive_Goodies_Device_Menu {
         $this->options = get_option('responsive_goodies_options');
     }
     
-    public function init() {
+    public function init(): void {
         if ($this->is_enabled()) {
             // Admin hooks
             add_action('wp_nav_menu_item_custom_fields', array($this, 'add_menu_item_fields'), 10, 4);
@@ -28,11 +28,11 @@ class Responsive_Goodies_Device_Menu {
         }
     }
     
-    private function is_enabled() {
+    private function is_enabled(): bool {
         return isset($this->options['device_menu_enabled']) && $this->options['device_menu_enabled'];
     }
     
-    public function add_menu_item_fields($item_id, $item, $depth, $args) {
+    public function add_menu_item_fields(int $item_id, mixed $item, int $depth, mixed $args): void {
         $desktop_visible = get_post_meta($item_id, '_rg_show_desktop', true);
         $tablet_visible = get_post_meta($item_id, '_rg_show_tablet', true);
         $mobile_visible = get_post_meta($item_id, '_rg_show_mobile', true);
@@ -61,7 +61,7 @@ class Responsive_Goodies_Device_Menu {
         <?php
     }
     
-    public function save_menu_item_fields($menu_id, $menu_item_db_id, $args) {
+    public function save_menu_item_fields(int $menu_id, int $menu_item_db_id, mixed $args): void {
         if (isset($_POST['rg_show_desktop'][$menu_item_db_id])) {
             update_post_meta($menu_item_db_id, '_rg_show_desktop', '1');
         } else {
@@ -81,7 +81,7 @@ class Responsive_Goodies_Device_Menu {
         }
     }
     
-    public function enqueue_admin_scripts($hook) {
+    public function enqueue_admin_scripts(string $hook): void {
         if ($hook === 'nav-menus.php') {
             wp_enqueue_script(
                 'responsive-goodies-device-menu-admin',
@@ -93,7 +93,7 @@ class Responsive_Goodies_Device_Menu {
         }
     }
     
-    public function enqueue_frontend_assets() {
+    public function enqueue_frontend_assets(): void {
         wp_enqueue_style(
             'responsive-goodies-device-menu',
             RESPONSIVE_GOODIES_PLUGIN_URL . 'includes/features/device-menu/device-menu.css',
@@ -102,7 +102,7 @@ class Responsive_Goodies_Device_Menu {
         );
     }
     
-    public function add_menu_item_classes($classes, $item, $args, $depth) {
+    public function add_menu_item_classes(array $classes, mixed $item, mixed $args, int $depth): array {
         $desktop_visible = get_post_meta($item->ID, '_rg_show_desktop', true);
         $tablet_visible = get_post_meta($item->ID, '_rg_show_tablet', true);
         $mobile_visible = get_post_meta($item->ID, '_rg_show_mobile', true);

@@ -16,7 +16,7 @@ class Responsive_Goodies {
         $this->load_dependencies();
     }
     
-    private function load_dependencies() {
+    private function load_dependencies(): void {
         require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-settings.php';
         require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/features/orphan-fix/class-orphan-fix.php';
         require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/features/device-menu/class-device-menu.php';
@@ -25,7 +25,7 @@ class Responsive_Goodies {
         require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/features/back-to-top/class-back-to-top.php';
     }
     
-    public function run() {
+    public function run(): void {
         $this->settings = new Responsive_Goodies_Settings();
         
         // Always allow admin settings
@@ -60,7 +60,7 @@ class Responsive_Goodies {
     /**
      * Check if Divi builder is currently active
      */
-    private function is_divi_builder_active() {
+    private function is_divi_builder_active(): bool {
         // Check for Divi builder URL parameter
         if (isset($_GET['et_fb']) && $_GET['et_fb'] == '1') {
             return true;
@@ -81,7 +81,7 @@ class Responsive_Goodies {
 
 
     
-    public function enqueue_frontend_assets() {
+    public function enqueue_frontend_assets(): void {
         wp_enqueue_style(
             'responsive-goodies-frontend',
             RESPONSIVE_GOODIES_PLUGIN_URL . 'assets/css/frontend.css',
@@ -90,7 +90,7 @@ class Responsive_Goodies {
         );
     }
     
-    public function enqueue_admin_assets($hook) {
+    public function enqueue_admin_assets(string $hook): void {
         if ('settings_page_responsive-goodies' !== $hook) {
             return;
         }
@@ -103,7 +103,7 @@ class Responsive_Goodies {
         );
     }
     
-    public static function activate() {
+    public static function activate(): void {
         // Set default options
         $default_options = array(
             'orphan_fix_enabled' => false,
@@ -126,7 +126,7 @@ class Responsive_Goodies {
     }
 
     
-    public static function deactivate() {
+    public static function deactivate(): void {
         // Intentionally empty — deactivation requires no cleanup for this plugin.
     }
 }

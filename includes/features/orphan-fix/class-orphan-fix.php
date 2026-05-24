@@ -15,17 +15,17 @@ class Responsive_Goodies_Orphan_Fix {
         $this->options = get_option('responsive_goodies_options');
     }
     
-    public function init() {
+    public function init(): void {
         if ($this->is_enabled()) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         }
     }
     
-    private function is_enabled() {
+    private function is_enabled(): bool {
         return isset($this->options['orphan_fix_enabled']) && $this->options['orphan_fix_enabled'];
     }
     
-    public function enqueue_scripts() {
+    public function enqueue_scripts(): void {
         wp_enqueue_script(
             'responsive-goodies-orphan-fix',
             RESPONSIVE_GOODIES_PLUGIN_URL . 'includes/features/orphan-fix/orphan-fix.js',

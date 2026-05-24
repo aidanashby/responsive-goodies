@@ -12,7 +12,7 @@ class Responsive_Goodies_Changelog {
     private static $github_username = 'aidanashby';
     private static $github_repo = 'responsive-goodies';
     
-    public static function display_changelog() {
+    public static function display_changelog(): void {
         $changelog_html = self::get_github_changelog();
         
         if ($changelog_html) {
@@ -22,7 +22,7 @@ class Responsive_Goodies_Changelog {
         }
     }
     
-    private static function get_github_changelog() {
+    private static function get_github_changelog(): string|false {
         // Don't run if we can't make HTTP requests
         if (!function_exists('wp_remote_get')) {
             return false;
@@ -76,7 +76,7 @@ class Responsive_Goodies_Changelog {
     }
 
     
-    private static function convert_markdown_to_html($text) {
+    private static function convert_markdown_to_html(string $text): string {
         // Convert markdown headers
         $text = preg_replace('/^## (.+)$/m', '<h4>$1</h4>', $text);
         $text = preg_replace('/^### (.+)$/m', '<h5>$1</h5>', $text);
@@ -94,7 +94,7 @@ class Responsive_Goodies_Changelog {
         return $text;
     }
     
-    public static function clear_changelog_cache() {
+    public static function clear_changelog_cache(): void {
         delete_transient('rg_github_changelog');
     }
 }

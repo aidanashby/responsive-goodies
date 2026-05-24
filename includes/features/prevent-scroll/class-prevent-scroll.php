@@ -15,17 +15,17 @@ class Responsive_Goodies_Prevent_Scroll {
         $this->options = get_option('responsive_goodies_options');
     }
     
-    public function init() {
+    public function init(): void {
         if ($this->is_enabled()) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
         }
     }
     
-    private function is_enabled() {
+    private function is_enabled(): bool {
         return isset($this->options['prevent_scroll_enabled']) && $this->options['prevent_scroll_enabled'];
     }
     
-    public function enqueue_styles() {
+    public function enqueue_styles(): void {
         wp_enqueue_style(
             'responsive-goodies-prevent-scroll',
             RESPONSIVE_GOODIES_PLUGIN_URL . 'includes/features/prevent-scroll/prevent-scroll.css',

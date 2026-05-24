@@ -27,7 +27,7 @@ class Responsive_Goodies_Updater {
         add_filter('upgrader_post_install', array($this, 'post_install'), 10, 3);
     }
     
-    public function check_for_update($transient) {
+    public function check_for_update(mixed $transient): mixed {
         if (empty($transient->checked)) {
             return $transient;
         }
@@ -48,7 +48,7 @@ class Responsive_Goodies_Updater {
         return $transient;
     }
     
-    private function get_remote_version() {
+    private function get_remote_version(): string|false {
         $request = wp_remote_get("https://api.github.com/repos/{$this->github_username}/{$this->github_repo}/releases/latest");
         
         if (is_wp_error($request)) {
@@ -65,7 +65,7 @@ class Responsive_Goodies_Updater {
         return false;
     }
     
-    public function plugin_info($res, $action, $args) {
+    public function plugin_info(mixed $res, string $action, mixed $args): mixed {
         if ($action !== 'plugin_information') {
             return false;
         }
@@ -102,7 +102,7 @@ class Responsive_Goodies_Updater {
         return $res;
     }
     
-    private function get_changelog() {
+    private function get_changelog(): string {
         $request = wp_remote_get("https://api.github.com/repos/{$this->github_username}/{$this->github_repo}/releases");
         
         if (is_wp_error($request)) {
@@ -126,7 +126,7 @@ class Responsive_Goodies_Updater {
         return $changelog;
     }
 	    
-    public function post_install($response, $hook_extra, $result) {
+    public function post_install(mixed $response, array $hook_extra, array $result): mixed {
         global $wp_filesystem;
         
         if (!isset($hook_extra['plugin']) || $hook_extra['plugin'] !== $this->plugin_slug) {
