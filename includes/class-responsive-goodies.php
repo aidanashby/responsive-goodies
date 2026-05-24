@@ -81,7 +81,28 @@ class Responsive_Goodies {
 
 
     
+    private function any_feature_enabled(): bool {
+        $options = get_option( 'responsive_goodies_options', array() );
+        $flags = array(
+            'orphan_fix_enabled',
+            'device_menu_enabled',
+            'disable_hover_enabled',
+            'prevent_scroll_enabled',
+            'back_to_top_enabled',
+        );
+        foreach ( $flags as $flag ) {
+            if ( ! empty( $options[ $flag ] ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function enqueue_frontend_assets(): void {
+        if ( ! $this->any_feature_enabled() ) {
+            return;
+        }
+
         wp_enqueue_style(
             'responsive-goodies-frontend',
             RESPONSIVE_GOODIES_PLUGIN_URL . 'assets/css/frontend.css',
