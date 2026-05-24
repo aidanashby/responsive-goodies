@@ -104,5 +104,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Naming Consistency | 1/1 | Complete | 2026-05-24 |
 | 3. Dead Code + Capability Checks | 1/1 | Complete | 2026-05-24 |
 | 4. PHP 8.x Modernisation | 1/1 | Complete | 2026-05-24 |
-| 5. Performance + Asset Loading | 0/1 | Ready to execute | - |
+| 5. Performance + Asset Loading | 0/1 | In progress | - |
 | 6. Docs + Release | 0/1 | Ready to execute | - |
