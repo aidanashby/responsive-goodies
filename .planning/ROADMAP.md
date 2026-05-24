@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Bug Fix** - Fix the changelog modal so it renders HTML content correctly
 - [x] **Phase 2: Naming Consistency** - Lock class, hook, and options key naming before any structural changes
 - [x] **Phase 3: Dead Code + Capability Checks** - Remove dead code and gate all admin-only actions
-- [ ] **Phase 4: PHP 8.x Modernisation** - Apply typed properties, return types, match, nullsafe, and ?? throughout
+- [x] **Phase 4: PHP 8.x Modernisation** - Apply typed properties, return types, match, nullsafe, and ?? throughout
 - [ ] **Phase 5: Performance + Asset Loading** - Conditionally enqueue assets and add transient guards
 - [ ] **Phase 6: Docs + Release** - Fill PHPDoc gaps, strip debug statements, update changelog, bump version
 
@@ -66,7 +66,7 @@ Plans:
   3. No typed properties or match expressions added (out of scope for pragmatic subset)
 **Plans**: 1 plan
 Plans:
-- [ ] 04-01-PLAN.md — ?? replacement throughout + return types on all non-trivial methods
+- [x] 04-01-PLAN.md — ?? replacement throughout + return types on all non-trivial methods
 
 ### Phase 5: Performance + Asset Loading
 **Goal**: Frontend and admin assets load only when needed; the GitHub update check is transient-guarded; frontend scripts use the defer strategy
@@ -103,6 +103,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Bug Fix | 1/1 | Complete | 2026-05-14 |
 | 2. Naming Consistency | 1/1 | Complete | 2026-05-24 |
 | 3. Dead Code + Capability Checks | 1/1 | Complete | 2026-05-24 |
-| 4. PHP 8.x Modernisation | 0/1 | Ready to execute | - |
+| 4. PHP 8.x Modernisation | 1/1 | Complete | 2026-05-24 |
 | 5. Performance + Asset Loading | 0/1 | Ready to execute | - |
 | 6. Docs + Release | 0/1 | Ready to execute | - |
