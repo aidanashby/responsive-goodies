@@ -92,11 +92,11 @@ class Responsive_Goodies_Updater {
     
     public function plugin_info(mixed $res, string $action, mixed $args): mixed {
         if ($action !== 'plugin_information') {
-            return false;
+            return $res;
         }
-        
+
         if ($args->slug !== dirname($this->plugin_slug)) {
-            return false;
+            return $res;
         }
         
         $remote_version = $this->get_remote_version();
