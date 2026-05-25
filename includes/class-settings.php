@@ -60,6 +60,15 @@ class Responsive_Goodies_Settings {
     }
 
     
+    /**
+     * Sanitises the settings form input before it is stored in wp_options.
+     *
+     * Checkboxes default to false when absent (unchecked fields are not submitted).
+     * orphan_fix_max_words is clamped to the 2–10 range enforced by the form field.
+     *
+     * @param array $input Raw POST data from the settings form.
+     * @return array Sanitised options array ready for wp_options storage.
+     */
     public function sanitize_options(array $input): array {
         $sanitized = array();
         
@@ -118,6 +127,14 @@ class Responsive_Goodies_Settings {
     }
 
     
+    /**
+     * Renders the fields registered to a given settings section as an HTML table.
+     *
+     * Bypasses do_settings_fields() to allow per-feature layout grouping in the
+     * settings page template. Reads directly from the $wp_settings_fields global.
+     *
+     * @param string $section The section ID as registered with add_settings_section().
+     */
     private function render_settings_section_fields(string $section): void {
         global $wp_settings_fields;
         

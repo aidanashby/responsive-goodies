@@ -58,7 +58,12 @@ class Responsive_Goodies {
 	
 	    
     /**
-     * Check if Divi builder is currently active
+     * Returns true if the Divi front-end builder is currently active.
+     *
+     * Checks the et_fb GET parameter and the et_fb_is_enabled() function if available.
+     * Features are suppressed while the builder is active to prevent JS/CSS conflicts.
+     *
+     * @return bool True if Divi builder is active, false otherwise.
      */
     private function is_divi_builder_active(): bool {
         // Check for Divi builder URL parameter
@@ -81,6 +86,14 @@ class Responsive_Goodies {
 
 
     
+    /**
+     * Returns true if at least one feature toggle is enabled in the options.
+     *
+     * Used to gate frontend asset enqueue — no assets are loaded when all features
+     * are disabled, avoiding unnecessary HTTP requests on every page.
+     *
+     * @return bool True if one or more features are enabled.
+     */
     private function any_feature_enabled(): bool {
         $options = get_option( 'responsive_goodies_options', array() );
         $flags = array(
@@ -98,6 +111,12 @@ class Responsive_Goodies {
         return false;
     }
 
+    /**
+     * Enqueues shared frontend CSS when at least one feature is active.
+     *
+     * Skips enqueue entirely when no features are enabled — this prevents
+     * an unnecessary stylesheet request on every page load.
+     */
     public function enqueue_frontend_assets(): void {
         if ( ! $this->any_feature_enabled() ) {
             return;

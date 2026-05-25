@@ -27,6 +27,16 @@ class Responsive_Goodies_Updater {
         add_filter('upgrader_post_install', array($this, 'post_install'), 10, 3);
     }
     
+    /**
+     * Injects update data into the WordPress plugin transient when a newer version exists.
+     *
+     * Hooked to pre_set_site_transient_update_plugins. Only runs when WordPress has
+     * already populated the checked list; short-circuits on empty transient to avoid
+     * redundant API calls during the initial plugin list build.
+     *
+     * @param mixed $transient The current update_plugins transient value.
+     * @return mixed The transient, modified with update data if a newer version is found.
+     */
     public function check_for_update(mixed $transient): mixed {
         if (empty($transient->checked)) {
             return $transient;
@@ -48,6 +58,14 @@ class Responsive_Goodies_Updater {
         return $transient;
     }
     
+    /**
+     * Fetches the latest release version string from the GitHub Releases API.
+     *
+     * Result is transient-cached for 6 hours to prevent per-pageload API calls.
+     * Strips the leading 'v' from the tag name before returning.
+     *
+     * @return string|false Version string (e.g. "0.4.0"), or false on failure.
+     */
     private function get_remote_version(): string|false {
         $cached = get_transient( 'rg_update_check' );
         if ( false !== $cached ) {
@@ -109,6 +127,14 @@ class Responsive_Goodies_Updater {
         return $res;
     }
     
+    /**
+     * Fetches release notes from GitHub to populate the WordPress update modal.
+     *
+     * Returns the last 5 releases as HTML. Result is transient-cached for 12 hours.
+     * Falls back to a plain "View on GitHub" string if the API call fails.
+     *
+     * @return string HTML string of release notes, or a fallback message on failure.
+     */
     private function get_changelog(): string {
         $cached = get_transient( 'rg_changelog_info' );
         if ( false !== $cached ) {
@@ -139,6 +165,18 @@ class Responsive_Goodies_Updater {
         return $changelog;
     }
 	    
+    /**
+     * Moves the installed plugin files to the correct directory after a GitHub ZIP update.
+     *
+     * GitHub archives unzip into a folder named after the tag (e.g. responsive-goodies-0.4.0),
+     * not the plugin slug. This hook renames the destination to match the slug so WordPress
+     * can locate the plugin after the update completes.
+     *
+     * @param mixed $response  The upgrader response object passed through.
+     * @param array $hook_extra Extra data provided by the upgrader (includes plugin slug).
+     * @param array $result    Install result array including the destination path.
+     * @return mixed The response, unchanged (side-effect: directory rename).
+     */
     public function post_install(mixed $response, array $hook_extra, array $result): mixed {
         global $wp_filesystem;
         

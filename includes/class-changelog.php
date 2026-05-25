@@ -12,6 +12,11 @@ class Responsive_Goodies_Changelog {
     private static $github_username = 'aidanashby';
     private static $github_repo = 'responsive-goodies';
     
+    /**
+     * Renders the changelog HTML directly to the page.
+     *
+     * Falls back to a plain error message if the GitHub API is unreachable.
+     */
     public static function display_changelog(): void {
         $changelog_html = self::get_github_changelog();
         
@@ -22,6 +27,14 @@ class Responsive_Goodies_Changelog {
         }
     }
     
+    /**
+     * Fetches and builds changelog HTML from the GitHub Releases API.
+     *
+     * Result is transient-cached for 12 hours to prevent per-pageload API calls.
+     * Returns the first 3 releases as sanitised HTML, or false on any failure.
+     *
+     * @return string|false Sanitised HTML string, or false if the API is unavailable.
+     */
     private static function get_github_changelog(): string|false {
         // Don't run if we can't make HTTP requests
         if (!function_exists('wp_remote_get')) {
@@ -76,6 +89,15 @@ class Responsive_Goodies_Changelog {
     }
 
     
+    /**
+     * Converts a subset of Markdown to HTML suitable for the changelog modal.
+     *
+     * Handles ## and ### headers, unordered lists, bold, and line breaks.
+     * Not a full Markdown parser — only covers patterns used in GitHub release bodies.
+     *
+     * @param string $text Raw Markdown text from a GitHub release body.
+     * @return string HTML string (not yet sanitised — caller must run wp_kses_post).
+     */
     private static function convert_markdown_to_html(string $text): string {
         // Convert markdown headers
         $text = preg_replace('/^## (.+)$/m', '<h4>$1</h4>', $text);
