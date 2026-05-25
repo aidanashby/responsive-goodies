@@ -146,9 +146,9 @@ class Responsive_Goodies_Settings {
         foreach ($wp_settings_fields['responsive-goodies'][$section] as $field) {
             echo '<tr>';
             if (!empty($field['args']['label_for'])) {
-                echo '<th scope="row"><label for="' . esc_attr($field['args']['label_for']) . '">' . $field['title'] . '</label></th>';
+                echo '<th scope="row"><label for="' . esc_attr($field['args']['label_for']) . '">' . esc_html($field['title']) . '</label></th>';
             } else {
-                echo '<th scope="row">' . $field['title'] . '</th>';
+                echo '<th scope="row">' . esc_html($field['title']) . '</th>';
             }
             echo '<td>';
             call_user_func($field['callback'], $field['args']);
