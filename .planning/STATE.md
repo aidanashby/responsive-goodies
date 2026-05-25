@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-05-14)
 ## Current Position
 
 Phase: 6 of 6 (Docs + Release)
-Plan: 0 of 1 in current phase
-Status: Ready to execute
-Last activity: 2026-05-24 — Phase 5 complete (transient guards, conditional enqueue, defer; 5/5 verified)
+Plan: 1 of 1 in current phase
+Status: Complete
+Last activity: 2026-05-25 — Phase 6 complete (PHPDoc, CHANGELOG.md, version bump to 0.4.0; 4/4 tasks done)
 
-Progress: [███░░░░░░░] 50%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -70,6 +70,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-24
-Stopped at: Phase 3 complete — Phase 4 ready to execute
-Resume file: .planning/phases/04-php8-modernisation/04-01-PLAN.md
+Last session: 2026-05-25
+Stopped at: Phase 6 complete — all 6 phases done, plugin at v0.4.0
+Resume file: None — project complete

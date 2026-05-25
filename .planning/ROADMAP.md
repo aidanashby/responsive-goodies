@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Dead Code + Capability Checks** - Remove dead code and gate all admin-only actions
 - [x] **Phase 4: PHP 8.x Modernisation** - Apply typed properties, return types, match, nullsafe, and ?? throughout
 - [x] **Phase 5: Performance + Asset Loading** - Conditionally enqueue assets and add transient guards
-- [ ] **Phase 6: Docs + Release** - Fill PHPDoc gaps, strip debug statements, update changelog, bump version
+- [x] **Phase 6: Docs + Release** - Fill PHPDoc gaps, strip debug statements, update changelog, bump version
 
 ## Phase Details
 
@@ -78,7 +78,7 @@ Plans:
   3. All frontend scripts registered with defer strategy (no wp_add_inline_script conflicts confirmed)
 **Plans**: 1 plan
 Plans:
-- [ ] 05-01-PLAN.md — Transient guard on updater API calls, conditional CSS enqueue, defer strategy on feature scripts
+- [x] 05-01-PLAN.md — Transient guard on updater API calls, conditional CSS enqueue, defer strategy on feature scripts
 
 ### Phase 6: Docs + Release
 **Goal**: PHPDoc gaps are filled, debug output is gone from all JS files, the changelog records the full refactor, and the version is bumped consistently to 0.4.0
@@ -91,7 +91,7 @@ Plans:
   4. grep -r "0\.3\.8" . returns zero results
 **Plans**: 1 plan
 Plans:
-- [ ] 06-01-PLAN.md — PHPDoc, console.log audit, CHANGELOG.md, version bump to 0.4.0
+- [x] 06-01-PLAN.md — PHPDoc, console.log audit, CHANGELOG.md, version bump to 0.4.0
 
 ## Progress
 
@@ -105,5 +105,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Dead Code + Capability Checks | 1/1 | Complete | 2026-05-24 |
 | 4. PHP 8.x Modernisation | 1/1 | Complete | 2026-05-24 |
 | 5. Performance + Asset Loading | 1/1 | Complete | 2026-05-24 |
-| 6. Docs + Release | 0/1 | Ready to execute | - |
+| 6. Docs + Release | 1/1 | Complete | 2026-05-25 |
 
