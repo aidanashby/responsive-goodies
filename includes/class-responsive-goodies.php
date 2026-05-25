@@ -67,7 +67,7 @@ class Responsive_Goodies {
      */
     private function is_divi_builder_active(): bool {
         // Check for Divi builder URL parameter
-        if (isset($_GET['et_fb']) && $_GET['et_fb'] == '1') {
+        if (isset($_GET['et_fb']) && (string) $_GET['et_fb'] === '1') {
             return true;
         }
         
