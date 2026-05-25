@@ -187,10 +187,21 @@ class Responsive_Goodies_Updater {
         // Move from GitHub folder structure to correct plugin folder
         $correct_folder = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . dirname($this->plugin_slug);
         if ($result['destination'] !== $correct_folder) {
-            $wp_filesystem->move($result['destination'], $correct_folder);
+            $moved = $wp_filesystem->move($result['destination'], $correct_folder);
+            if (!$moved) {
+                return new WP_Error(
+                    'rg_move_failed',
+                    sprintf(
+                        /* translators: 1: source path, 2: destination path */
+                        __('Responsive Goodies update failed: could not move plugin files from %1$s to %2$s.', 'responsive-goodies'),
+                        $result['destination'],
+                        $correct_folder
+                    )
+                );
+            }
             $result['destination'] = $correct_folder;
         }
-        
+
         return $response;
     }
 
