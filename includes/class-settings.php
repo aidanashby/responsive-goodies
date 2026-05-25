@@ -167,7 +167,7 @@ class Responsive_Goodies_Settings {
         </label>
         <div class="rg-tooltip">
             <span class="rg-tooltip-icon">?</span>
-            <span class="rg-tooltip-text">Minimum number of words required on the last line before orphan fix is applied (2-10)</span>
+            <span class="rg-tooltip-text">Enable orphan fix to prevent single words appearing alone on the last line of paragraphs and headings</span>
         </div>
         <?php
     }
