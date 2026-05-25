@@ -78,6 +78,10 @@ class Responsive_Goodies_Updater {
             return false;
         }
 
+        if (200 !== (int) wp_remote_retrieve_response_code($request)) {
+            return false;
+        }
+
         $body = wp_remote_retrieve_body($request);
         $data = json_decode($body, true);
 
