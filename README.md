@@ -19,6 +19,9 @@ Eliminates horizontal scrolling issues by ensuring all content stays within the 
 ### ⬆️ Back to Top Button Control
 Control the visibility of Divi's back-to-top button on different devices. Choose which devices should display the scroll-to-top functionality.
 
+### 🍔 Mobile Hamburger Control
+Adds a "Show hamburger menu on mobile" checkbox (checked by default) to each menu in Appearance → Menus. Untick it to keep a Divi menu module's items visible on mobile instead of collapsing to a hamburger. Applies per menu.
+
 ## Device Breakpoints
 
 This plugin uses Divi's responsive breakpoints for consistency:
@@ -56,6 +59,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 This is a personal project shared freely with the community. While I've made it available for others to use and fork, I don't provide ongoing support or accept feature requests. Feel free to fork and modify for your own needs.
 
 ## Changelog
+
+### Version 0.5.0 (2026-07-20)
+
+**Added**
+- Mobile Hamburger Control: a per-menu "Show hamburger menu on mobile" checkbox in the Menu Settings box (Appearance → Menus), checked by default. When unticked, that menu's Divi module keeps its items visible on mobile instead of collapsing to a hamburger. Gated by a master toggle on the settings page (default off).
+- uninstall.php: full cleanup on plugin deletion — removes the options row, cached transients, and all plugin post/term meta.
 
 ### Version 0.4.0 (2026-05-24)
 

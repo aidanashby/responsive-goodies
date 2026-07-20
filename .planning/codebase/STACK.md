@@ -26,7 +26,7 @@
 - No PHP framework (no Laravel, Symfony, etc.)
 
 **Frontend:**
-- jQuery — bundled with WordPress; used as dependency for `frontend.js`, `orphan-fix.js`, `device-menu-admin.js`
+- jQuery — bundled with WordPress; used as dependency for `orphan-fix.js` and `device-menu-admin.js` (mobile-hamburger-frontend.js is vanilla JS, no jQuery)
 - No CSS preprocessor (plain CSS throughout)
 
 **Build/Dev:**

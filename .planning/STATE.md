@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-05-14)
 
 **Core value:** Every feature works correctly and the codebase is maintainable — naming is consistent, capability checks are in place, dead code is gone, obvious documentation gaps are filled, and the confirmed changelog bug is fixed.
-**Current focus:** Phase 6 — Docs + Release
+**Current focus:** Quality Refactor complete; post-refactor feature work
 
 ## Current Position
 
-Phase: 6 of 6 (Docs + Release)
+Phase: Quality Refactor complete (6 of 6)
 Plan: 1 of 1 in current phase
 Status: Complete
-Last activity: 2026-05-25 — Phase 6 complete (PHPDoc, CHANGELOG.md, version bump to 0.4.0; 4/4 tasks done)
+Last activity: 2026-07-20 — Post-refactor feature: Mobile Hamburger Control (per-menu toggle for Divi menus) + uninstall.php; version bump to 0.5.0
 
 Progress: [██████████] 100%
 
@@ -70,6 +70,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-25
-Stopped at: Phase 6 complete — all 6 phases done, plugin at v0.4.0
-Resume file: None — project complete
+Last session: 2026-07-20
+Stopped at: Mobile Hamburger Control feature shipped; plugin at v0.5.0
+Resume file: None — feature complete

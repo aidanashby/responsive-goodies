@@ -44,7 +44,7 @@
 - None
 
 **Logs:**
-- `console.log('Responsive Goodies frontend scripts loaded')` in `assets/js/frontend.js` — debug only, no structured logging
+- None — no console logging in shipped assets, no structured logging
 
 ## CI/CD & Deployment
 

@@ -76,6 +76,17 @@
 3. Frontend render → `nav_menu_css_class` filter appends `rg-hide-{device}` classes
 4. Feature CSS hides elements at appropriate breakpoints via media queries
 
+**Mobile Hamburger (runtime):**
+1. Menu editor loads → `admin_footer-nav-menus.php` injects a "Show hamburger menu on mobile" checkbox into the Menu Settings box (checked by default)
+2. Save → `wp_update_nav_menu` writes `_rg_show_mobile_hamburger` term meta (nonce + `edit_theme_options` guarded)
+3. Frontend render → `wp_nav_menu_args` filter appends the `rg-nmh` marker class to the menu `<ul>` when the toggle is off
+4. `mobile-hamburger-frontend.js` finds each `.rg-nmh` menu and adds `no-mobile-hamburger` to its Divi module wrapper (`.et_pb_menu` / `.et_pb_fullwidth_menu`)
+5. Feature CSS keeps menu items visible and hides the hamburger at ≤980px
+
+**Plugin Uninstall:**
+1. Plugin deleted → WordPress runs `uninstall.php` (guarded by `WP_UNINSTALL_PLUGIN`)
+2. Removes `responsive_goodies_options`, the `rg_*` transients, the device-menu post meta, and the mobile-hamburger term meta
+
 ## Key Abstractions
 
 **Feature Class Contract:**
@@ -113,9 +124,9 @@
 
 ## Cross-Cutting Concerns
 
-**Logging:** `console.log` in `assets/js/frontend.js` only — no PHP logging
+**Logging:** None — no console.log in shipped assets, no PHP logging
 **Validation:** Input sanitised via `sanitize_text_field()`, `absint()`, `isset()` checks in `sanitize_options()`
-**Authentication:** `manage_options` capability check on settings page registration; no nonce on device menu meta save (`wp_update_nav_menu_item` is called by WordPress core which handles nonce)
+**Authentication:** `manage_options` capability check on settings page registration; no nonce on device menu meta save (`wp_update_nav_menu_item` is called by WordPress core which handles nonce); mobile-hamburger save verifies its own nonce and `edit_theme_options` capability
 **Divi Compatibility:** `is_divi_builder_active()` in orchestrator suppresses all feature hooks during Divi visual editing; back-to-top feature targets `.et_pb_scroll_top` Divi selector directly
 
 ---

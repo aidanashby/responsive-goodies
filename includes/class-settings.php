@@ -56,7 +56,11 @@ class Responsive_Goodies_Settings {
         add_settings_section('back_to_top_section', '', '__return_empty_string', 'responsive-goodies');
         add_settings_field('back_to_top_enabled', 'Enable Back to Top Button Control', array($this, 'back_to_top_enabled_callback'), 'responsive-goodies', 'back_to_top_section');
         add_settings_field('back_to_top_devices', 'Show Back to Top Button On', array($this, 'back_to_top_devices_callback'), 'responsive-goodies', 'back_to_top_section');
-        
+
+        // Mobile Hamburger Section
+        add_settings_section('mobile_hamburger_section', '', '__return_empty_string', 'responsive-goodies');
+        add_settings_field('mobile_hamburger_enabled', 'Enable Mobile Hamburger Control', array($this, 'mobile_hamburger_enabled_callback'), 'responsive-goodies', 'mobile_hamburger_section');
+
     }
 
     
@@ -85,7 +89,9 @@ class Responsive_Goodies_Settings {
         $sanitized['back_to_top_desktop'] = isset($input['back_to_top_desktop']) ? true : false;
         $sanitized['back_to_top_tablet'] = isset($input['back_to_top_tablet']) ? true : false;
         $sanitized['back_to_top_mobile'] = isset($input['back_to_top_mobile']) ? true : false;
-        
+
+        $sanitized['mobile_hamburger_enabled'] = isset($input['mobile_hamburger_enabled']) ? true : false;
+
         return $sanitized;
     }
     
@@ -116,7 +122,11 @@ class Responsive_Goodies_Settings {
                     <div class="rg-feature-group">
                         <?php $this->render_settings_section_fields('back_to_top_section'); ?>
                     </div>
-                    
+
+                    <div class="rg-feature-group">
+                        <?php $this->render_settings_section_fields('mobile_hamburger_section'); ?>
+                    </div>
+
                 </div>
                 
                 <?php submit_button(); ?>
@@ -264,6 +274,20 @@ class Responsive_Goodies_Settings {
         <?php
     }
     
+    public function mobile_hamburger_enabled_callback(): void {
+        $enabled = $this->options['mobile_hamburger_enabled'] ?? false;
+        ?>
+        <label class="rg-toggle-switch">
+            <input type="checkbox" name="responsive_goodies_options[mobile_hamburger_enabled]" value="1" <?php checked($enabled); ?> />
+            <span class="rg-slider"></span>
+        </label>
+        <div class="rg-tooltip">
+            <span class="rg-tooltip-icon">?</span>
+            <span class="rg-tooltip-text">Add a "Show hamburger menu on mobile" checkbox to each menu in Appearance → Menus, controlling whether Divi menu modules collapse to a hamburger on mobile</span>
+        </div>
+        <?php
+    }
+
     public function back_to_top_devices_callback(): void {
         $desktop = $this->options['back_to_top_desktop'] ?? true;
         $tablet = $this->options['back_to_top_tablet'] ?? true;

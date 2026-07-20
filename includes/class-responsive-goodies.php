@@ -23,6 +23,7 @@ class Responsive_Goodies {
         require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/features/disable-hover/class-disable-hover.php';
         require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/features/prevent-scroll/class-prevent-scroll.php';
         require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/features/back-to-top/class-back-to-top.php';
+        require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/features/mobile-hamburger/class-mobile-hamburger.php';
     }
     
     public function run(): void {
@@ -44,6 +45,7 @@ class Responsive_Goodies {
         $this->features['disable_hover'] = new Responsive_Goodies_Disable_Hover();
         $this->features['prevent_scroll'] = new Responsive_Goodies_Prevent_Scroll();
         $this->features['back_to_top'] = new Responsive_Goodies_Back_To_Top();
+        $this->features['mobile_hamburger'] = new Responsive_Goodies_Mobile_Hamburger();
         
         // Initialize features
         foreach ($this->features as $feature) {
@@ -102,6 +104,7 @@ class Responsive_Goodies {
             'disable_hover_enabled',
             'prevent_scroll_enabled',
             'back_to_top_enabled',
+            'mobile_hamburger_enabled',
         );
         foreach ( $flags as $flag ) {
             if ( ! empty( $options[ $flag ] ) ) {
@@ -156,7 +159,8 @@ class Responsive_Goodies {
             'back_to_top_enabled' => false,
             'back_to_top_desktop' => true,
             'back_to_top_tablet' => true,
-            'back_to_top_mobile' => true
+            'back_to_top_mobile' => true,
+            'mobile_hamburger_enabled' => false
         );
         
         add_option('responsive_goodies_options', $default_options);

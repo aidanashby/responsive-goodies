@@ -7,18 +7,15 @@
 ```
 responsive-goodies/
 ├── responsive-goodies.php          # Plugin entry point, constants, bootstrap
+├── uninstall.php                    # Full data cleanup on plugin deletion
 ├── LICENSE
 ├── README.md
 ├── admin/
-│   ├── css/
-│   │   └── admin.css               # Settings page styles
-│   └── js/
-│       └── admin.js                # Settings page JavaScript
+│   └── css/
+│       └── admin.css               # Settings page styles
 ├── assets/
-│   ├── css/
-│   │   └── frontend.css            # Shared frontend styles (always enqueued)
-│   └── js/
-│       └── frontend.js             # Shared frontend JS (always enqueued, currently a stub)
+│   └── css/
+│       └── frontend.css            # Shared frontend styles (enqueued when any feature is enabled)
 └── includes/
     ├── class-responsive-goodies.php # Orchestrator — loads deps, runs features
     ├── class-settings.php           # Admin settings page and WP Settings API registration
@@ -35,6 +32,10 @@ responsive-goodies/
         ├── disable-hover/
         │   ├── class-disable-hover.php     # Feature class
         │   └── disable-hover.css           # Touch-device hover suppression CSS
+        ├── mobile-hamburger/
+        │   ├── class-mobile-hamburger.php     # Feature class
+        │   ├── mobile-hamburger.css           # Keep Divi menu items visible instead of hamburger
+        │   └── mobile-hamburger-frontend.js   # Tags the Divi module wrapper from the marked menu
         ├── orphan-fix/
         │   ├── class-orphan-fix.php        # Feature class
         │   └── orphan-fix.js               # Client-side text manipulation
@@ -51,12 +52,11 @@ responsive-goodies/
 
 **`admin/`:**
 - Assets scoped to wp-admin only — loaded exclusively on the plugin settings page (`settings_page_responsive-goodies` hook)
-- Key files: `admin/css/admin.css`, `admin/js/admin.js`
+- Key files: `admin/css/admin.css`
 
 **`assets/`:**
-- Shared frontend assets enqueued on every frontend page load (unconditionally in `enqueue_frontend_assets()`)
-- `frontend.js` is currently a stub (logs to console only)
-- Key files: `assets/css/frontend.css`, `assets/js/frontend.js`
+- Shared frontend CSS, enqueued only when at least one feature is enabled (`enqueue_frontend_assets()` guards on `any_feature_enabled()`)
+- Key files: `assets/css/frontend.css`
 
 **`includes/`:**
 - All PHP classes — orchestrator, settings, updater, changelog
@@ -86,8 +86,12 @@ responsive-goodies/
 - `includes/features/back-to-top/class-back-to-top.php`
 - `includes/features/device-menu/class-device-menu.php`
 - `includes/features/disable-hover/class-disable-hover.php`
+- `includes/features/mobile-hamburger/class-mobile-hamburger.php`
 - `includes/features/orphan-fix/class-orphan-fix.php`
 - `includes/features/prevent-scroll/class-prevent-scroll.php`
+
+**Uninstall Cleanup:**
+- `uninstall.php` — removes the options row, cached transients, and all plugin post/term meta on deletion
 
 ## Naming Conventions
 
@@ -109,8 +113,11 @@ responsive-goodies/
 - Single array: `responsive_goodies_options`
 - Per-feature keys prefixed: `{feature_slug}_{setting}` (e.g. `orphan_fix_max_words`, `back_to_top_desktop`)
 
-**Post meta keys:**
+**Post meta keys (device-menu, per menu item):**
 - Prefixed with `_rg_`: `_rg_show_desktop`, `_rg_show_tablet`, `_rg_show_mobile`
+
+**Term meta keys (mobile-hamburger, per menu):**
+- Prefixed with `_rg_`: `_rg_show_mobile_hamburger`
 
 ## Where to Add New Code
 

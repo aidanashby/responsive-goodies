@@ -3,6 +3,12 @@
 All notable changes to Responsive Goodies are documented in this file.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [0.5.0] - 2026-07-20
+
+### Added
+- Mobile Hamburger Control: a per-menu "Show hamburger menu on mobile" checkbox in the Menu Settings box (Appearance → Menus), checked by default. When unticked, that menu's Divi module keeps its items visible on mobile instead of collapsing to a hamburger. Gated by a master toggle on the settings page (default off).
+- uninstall.php: full cleanup on plugin deletion — removes the options row, cached transients, and all plugin post/term meta (closes a pre-existing data leak).
+
 ## [0.4.0] - 2026-05-24
 
 ### Fixed
