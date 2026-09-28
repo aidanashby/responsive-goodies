@@ -19,6 +19,10 @@ delete_transient('rg_github_changelog');
 delete_transient('rg_update_check');
 delete_transient('rg_changelog_info');
 
+// Plugin Update Checker state.
+delete_site_option('external_updates-responsive-goodies');
+wp_clear_scheduled_hook('puc_cron_check_updates-responsive-goodies');
+
 // Device-menu per-item post meta.
 delete_post_meta_by_key('_rg_show_desktop');
 delete_post_meta_by_key('_rg_show_tablet');

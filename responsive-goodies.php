@@ -7,6 +7,7 @@
  * Author: Aidan Ashby
  * License: GPL v2 or later
  * Text Domain: responsive-goodies
+ * Update URI: https://github.com/aidanashby/responsive-goodies
  */
 
 // Prevent direct access
@@ -22,16 +23,19 @@ define('RESPONSIVE_GOODIES_PLUGIN_URL', plugin_dir_url(__FILE__));
 // Include the main plugin class
 require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-responsive-goodies.php';
 
-// Include updater
-require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-updater.php';
-
 // Include changelog
 require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-changelog.php';
 
-// Initialize updater
-if (is_admin()) {
-    new Responsive_Goodies_Updater(__FILE__, 'aidanashby', 'responsive-goodies');
-}
+// Updates from GitHub releases. Runs in every context so WP-Cron auto-updates see new versions.
+add_action('plugins_loaded', function () {
+    require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'plugin-update-checker/plugin-update-checker.php';
+    $checker = YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+        'https://github.com/aidanashby/responsive-goodies/',
+        __FILE__,
+        'responsive-goodies'
+    );
+    $checker->getVcsApi()->enableReleaseAssets();
+});
 
 // Initialize the plugin
 function responsive_goodies_init() {
