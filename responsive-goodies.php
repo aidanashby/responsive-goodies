@@ -5,7 +5,8 @@
  * Description: A collection of responsive design utilities for WordPress sites.
  * Version: 0.5.2
  * Author: Aidan Ashby
- * License: GPL v2 or later
+ * License: MIT
+ * Requires PHP: 8.0
  * Text Domain: responsive-goodies
  * Update URI: https://github.com/aidanashby/responsive-goodies
  */
