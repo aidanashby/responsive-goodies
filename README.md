@@ -43,7 +43,7 @@ This plugin supports automatic updates via GitHub releases. Your WordPress admin
 ## Requirements
 
 - WordPress 5.0 or higher
-- PHP 7.0 or higher
+- PHP 8.0 or higher
 
 ## Author
 
@@ -60,47 +60,4 @@ This is a personal project shared freely with the community. While I've made it 
 
 ## Changelog
 
-### Version 0.5.0 (2026-07-20)
-
-**Added**
-- Mobile Hamburger Control: a per-menu "Show hamburger menu on mobile" checkbox in the Menu Settings box (Appearance → Menus), checked by default. When unticked, that menu's Divi module keeps its items visible on mobile instead of collapsing to a hamburger. Gated by a master toggle on the settings page (default off).
-- uninstall.php: full cleanup on plugin deletion — removes the options row, cached transients, and all plugin post/term meta.
-
-### Version 0.4.0 (2026-05-24)
-
-**Fixed**
-- Changelog modal now renders formatted HTML content from the GitHub Releases API
-- Fixed broken markdown-to-HTML ul-wrapping regex in convert_markdown_to_html()
-- Fixed typo in GitHub username used in changelog API call
-- get_github_changelog() now correctly builds, sanitises, and caches the HTML response
-
-**Changed**
-- PHP 8.x modernisation: ?? operator replaces isset() ternaries throughout; return type declarations added to all non-trivial methods
-- Frontend assets now only enqueue when at least one feature is enabled
-- Admin JS stub removed; CSS-only toggle controls retained
-- GitHub update check and changelog API calls are now transient-cached (6h and 12h respectively)
-- Frontend scripts registered with defer strategy
-
-**Removed**
-- Removed stub frontend.js and admin.js files (contained only console.log statements)
-- Removed changelog section from plugin settings page (replaced with GitHub-fetched content in update modal)
-
-### Version 0.3
-- Added disable hover effects on touch devices
-- Added prevent horizontal scroll feature
-- Added back to top button visibility controls
-- Improved settings page UI with toggle switches and tooltips
-- Added device-based menu display controls
-
-### Version 0.2
-- Added device-based menu display feature
-- Improved settings page styling with feature sections
-- Fixed orphan text logic
-- Updated range for maximum hanging words (2-10)
-
-### Version 0.1
-- Initial release
-- Orphan text fix functionality
-- Basic settings page
-
-For the complete changelog history, see [CHANGELOG.md](CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md).

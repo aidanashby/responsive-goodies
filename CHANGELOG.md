@@ -48,4 +48,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [0.3.8] - Previous release
 
-See GitHub releases for earlier changelog entries.
+See GitHub releases for 0.3.x point releases.
+
+## [0.3]
+- Added disable hover effects on touch devices
+- Added prevent horizontal scroll feature
+- Added back to top button visibility controls
+- Improved settings page UI with toggle switches and tooltips
+- Added device-based menu display controls
+
+## [0.2]
+- Added device-based menu display feature
+- Improved settings page styling with feature sections
+- Fixed orphan text logic
+- Updated range for maximum hanging words (2-10)
+
+## [0.1]
+- Initial release
+- Orphan text fix functionality
+- Basic settings page
