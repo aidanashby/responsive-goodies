@@ -3,6 +3,11 @@
 All notable changes to Responsive Goodies are documented in this file.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [0.5.1] - 2026-09-28
+
+### Fixed
+- Device Menu Controls: new menu items now default to visible on desktop and hidden on tablet/mobile, as intended, instead of visible everywhere. WordPress writes menu-item postmeta immediately on item creation (before the visibility checkboxes are ever shown), which was overwriting all three device flags to "hidden" before the user touched anything; the save handler now only writes those flags when the checkboxes are actually present in the request.
+
 ## [0.5.0] - 2026-07-20
 
 ### Added

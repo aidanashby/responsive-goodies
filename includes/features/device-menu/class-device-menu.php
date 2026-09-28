@@ -37,10 +37,10 @@ class Responsive_Goodies_Device_Menu {
         $tablet_visible = get_post_meta($item_id, '_rg_show_tablet', true);
         $mobile_visible = get_post_meta($item_id, '_rg_show_mobile', true);
         
-        // Default to visible if not set
+        // New menu items default to desktop-only: shown on desktop, hidden on tablet/mobile
         $desktop_visible = ($desktop_visible !== '') ? $desktop_visible : '1';
-        $tablet_visible = ($tablet_visible !== '') ? $tablet_visible : '1';
-        $mobile_visible = ($mobile_visible !== '') ? $mobile_visible : '1';
+        $tablet_visible = ($tablet_visible !== '') ? $tablet_visible : '0';
+        $mobile_visible = ($mobile_visible !== '') ? $mobile_visible : '0';
         ?>
         <div class="rg-device-visibility">
             <h4>Device Visibility</h4>
@@ -62,6 +62,15 @@ class Responsive_Goodies_Device_Menu {
     }
     
     public function save_menu_item_fields(int $menu_id, int $menu_item_db_id, mixed $args): void {
+        // WordPress fires this on the AJAX "add item" request too, before our
+        // checkboxes are rendered or submitted. Skip if none of our fields are
+        // present at all, so a brand-new item keeps its unset (default) meta
+        // instead of every field being written as '0'.
+        $has_rg_fields = isset($_POST['rg_show_desktop']) || isset($_POST['rg_show_tablet']) || isset($_POST['rg_show_mobile']);
+        if (!$has_rg_fields) {
+            return;
+        }
+
         if (isset($_POST['rg_show_desktop'][$menu_item_db_id])) {
             update_post_meta($menu_item_db_id, '_rg_show_desktop', '1');
         } else {
@@ -107,14 +116,14 @@ class Responsive_Goodies_Device_Menu {
         $tablet_visible = get_post_meta($item->ID, '_rg_show_tablet', true);
         $mobile_visible = get_post_meta($item->ID, '_rg_show_mobile', true);
         
-        // Add device-specific classes
+        // New menu items (no meta saved yet) default to desktop-only visibility
         if ($desktop_visible === '0') {
             $classes[] = 'rg-hide-desktop';
         }
-        if ($tablet_visible === '0') {
+        if ($tablet_visible === '0' || $tablet_visible === '') {
             $classes[] = 'rg-hide-tablet';
         }
-        if ($mobile_visible === '0') {
+        if ($mobile_visible === '0' || $mobile_visible === '') {
             $classes[] = 'rg-hide-mobile';
         }
         
