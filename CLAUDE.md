@@ -30,11 +30,12 @@ A planned quality pass on the Responsive Goodies WordPress plugin (v0.3.8). No n
 ## Key Dependencies
 - WordPress core — all functionality depends on WP APIs (options, post meta, enqueue, remote HTTP)
 - jQuery — required by frontend and admin JS; declared as dependency via `wp_enqueue_script`
-- GitHub Releases API (`https://api.github.com/repos/aidnashby/responsive-goodies/releases`) — used for self-hosted update delivery and changelog retrieval via `wp_remote_get`
+- Plugin Update Checker (bundled in `plugin-update-checker/`, wired in `responsive-goodies.php`) — self-hosted updates from GitHub releases. Release zips are built by `.github/workflows/release.yml` on a `v*` tag; update icons are `assets/icon-128x128.png` and `assets/icon-256x256.png`
+- GitHub Releases API — changelog retrieval via `wp_remote_get` in `class-changelog.php`
 ## Configuration
 - Plugin settings stored as a single serialised array in `wp_options` under key `responsive_goodies_options`
 - No `.env` file; no external config file
-- GitHub username and repo name hardcoded in `class-updater.php` and `class-changelog.php`
+- GitHub username and repo name hardcoded in the updater bootstrap in `responsive-goodies.php` and in `class-changelog.php`
 - No build config files
 ## Platform Requirements
 - WordPress local install (project uses `C:\Users\aidan\Studio\divi-5` per global config)
@@ -79,10 +80,10 @@ Conventions not yet established. Will populate as patterns emerge during develop
 - Contains: One class per feature with `__construct()` (reads options), `init()` (registers hooks if enabled), `is_enabled()` (option check)
 - Depends on: WordPress hooks, WordPress Options API, own CSS/JS assets
 - Used by: Orchestrator
-- Purpose: Self-update delivery and changelog display via GitHub Releases API
-- Location: `includes/class-updater.php`, `includes/class-changelog.php`
-- Contains: `Responsive_Goodies_Updater`, `Responsive_Goodies_Changelog`
-- Depends on: `wp_remote_get`, WordPress transient API, WordPress updater filters
+- Purpose: Self-update delivery (Plugin Update Checker) and changelog display via GitHub Releases API
+- Location: `plugin-update-checker/` (bundled library, bootstrapped in `responsive-goodies.php`), `includes/class-changelog.php`
+- Contains: `Responsive_Goodies_Changelog`
+- Depends on: `wp_remote_get`, WordPress transient API
 - Used by: Entry point (updater) and Settings (changelog callback)
 ## Data Flow
 ## Key Abstractions

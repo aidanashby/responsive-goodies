@@ -3,6 +3,19 @@
 All notable changes to Responsive Goodies are documented in this file.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [0.5.2] - 2026-09-28
+
+### Changed
+- Updates now come through the bundled Plugin Update Checker library instead of the plugin's own updater. The automatic updates toggle on the Plugins screen now works, and updates install into the right folder without a manual move.
+- Update checks now also run in the background (WP-Cron), so automatic updates find new versions.
+
+### Added
+- Plugin icon on the Plugins and Updates screens.
+- `Update URI` header, so WordPress.org can't offer an unrelated plugin with the same name as an update.
+
+### Fixed
+- Uninstall now also removes the update checker's stored data.
+
 ## [0.5.1] - 2026-09-28
 
 ### Fixed
