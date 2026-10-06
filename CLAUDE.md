@@ -8,6 +8,12 @@ A planned quality pass on the Responsive Goodies WordPress plugin (v0.3.8). No n
 **Core Value:** Every feature works correctly and the codebase is maintainable — naming is consistent, capability checks are in place, dead code is gone, obvious documentation gaps are filled, and the confirmed changelog bug is fixed.
 <!-- GSD:project-end -->
 
+## Pushing
+
+- Only push when the user asks. Never push on your own initiative.
+- Push to `main` by default. Use a branch or a pull request only when the user explicitly asks for one. Never choose either yourself.
+
+
 <!-- GSD:stack-start source:codebase/STACK.md -->
 ## Technology Stack
 
