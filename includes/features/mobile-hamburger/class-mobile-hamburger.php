@@ -56,9 +56,6 @@ class Responsive_Goodies_Mobile_Hamburger {
         $show = get_term_meta($nav_menu_selected_id, self::META_KEY, true);
         $checked = ($show !== '0'); // Absent or '1' = checked by default.
 
-        ob_start();
-        wp_nonce_field('rg_hamburger_save', 'rg_hamburger_nonce');
-        $nonce = ob_get_clean();
         ?>
         <div id="rg-hamburger-setting" style="display:none;">
             <div class="menu-settings-group rg-hamburger-group">
@@ -66,7 +63,7 @@ class Responsive_Goodies_Mobile_Hamburger {
                 <div class="menu-settings-input">
                     <label>
                         <input type="hidden" name="rg_hamburger_field" value="1" />
-                        <?php echo $nonce; ?>
+                        <?php wp_nonce_field('rg_hamburger_save', 'rg_hamburger_nonce'); ?>
                         <input type="checkbox" name="rg_show_mobile_hamburger" value="1" <?php checked($checked); ?> />
                         Show hamburger menu on mobile
                     </label>
@@ -97,7 +94,7 @@ class Responsive_Goodies_Mobile_Hamburger {
             return;
         }
 
-        if (!isset($_POST['rg_hamburger_nonce']) || !wp_verify_nonce($_POST['rg_hamburger_nonce'], 'rg_hamburger_save')) {
+        if (!isset($_POST['rg_hamburger_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['rg_hamburger_nonce'])), 'rg_hamburger_save')) {
             return;
         }
 

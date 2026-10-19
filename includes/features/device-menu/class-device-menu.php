@@ -45,15 +45,15 @@ class Responsive_Goodies_Device_Menu {
         <div class="rg-device-visibility">
             <h4>Device Visibility</h4>
             <label>
-                <input type="checkbox" name="rg_show_desktop[<?php echo $item_id; ?>]" value="1" <?php checked($desktop_visible, '1'); ?> />
+                <input type="checkbox" name="rg_show_desktop[<?php echo (int) $item_id; ?>]" value="1" <?php checked($desktop_visible, '1'); ?> />
                 Desktop
             </label>
             <label>
-                <input type="checkbox" name="rg_show_tablet[<?php echo $item_id; ?>]" value="1" <?php checked($tablet_visible, '1'); ?> />
+                <input type="checkbox" name="rg_show_tablet[<?php echo (int) $item_id; ?>]" value="1" <?php checked($tablet_visible, '1'); ?> />
                 Tablet
             </label>
             <label>
-                <input type="checkbox" name="rg_show_mobile[<?php echo $item_id; ?>]" value="1" <?php checked($mobile_visible, '1'); ?> />
+                <input type="checkbox" name="rg_show_mobile[<?php echo (int) $item_id; ?>]" value="1" <?php checked($mobile_visible, '1'); ?> />
                 Mobile
             </label>
 
@@ -67,6 +67,10 @@ class Responsive_Goodies_Device_Menu {
         // present at all, so a brand-new item keeps its unset (default) meta
         // instead of every field being written as '0'.
         $has_rg_fields = isset($_POST['rg_show_desktop']) || isset($_POST['rg_show_tablet']) || isset($_POST['rg_show_mobile']);
+        if (!current_user_can('edit_theme_options')) {
+            return;
+        }
+
         if (!$has_rg_fields) {
             return;
         }

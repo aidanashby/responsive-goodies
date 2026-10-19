@@ -21,7 +21,7 @@ class Responsive_Goodies_Changelog {
         $changelog_html = self::get_github_changelog();
         
         if ($changelog_html) {
-            echo $changelog_html;
+            echo wp_kses_post($changelog_html);
         } else {
             echo '<p>Unable to load changelog.</p>';
         }
