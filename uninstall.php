@@ -14,7 +14,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 // Settings option.
 delete_option('responsive_goodies_options');
 
-// Cached update/changelog transients.
+// Cached update/changelog transients (left by versions before 0.5.3).
 delete_transient('rg_github_changelog');
 delete_transient('rg_update_check');
 delete_transient('rg_changelog_info');

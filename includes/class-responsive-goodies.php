@@ -53,9 +53,7 @@ class Responsive_Goodies {
                 $feature->init();
             }
         }
-        
-        // Enqueue frontend scripts and styles
-        add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
+
     }
 	
 	    
@@ -88,51 +86,6 @@ class Responsive_Goodies {
 
 
     
-    /**
-     * Returns true if at least one feature toggle is enabled in the options.
-     *
-     * Used to gate frontend asset enqueue — no assets are loaded when all features
-     * are disabled, avoiding unnecessary HTTP requests on every page.
-     *
-     * @return bool True if one or more features are enabled.
-     */
-    private function any_feature_enabled(): bool {
-        $options = get_option( 'responsive_goodies_options', array() );
-        $flags = array(
-            'orphan_fix_enabled',
-            'device_menu_enabled',
-            'disable_hover_enabled',
-            'prevent_scroll_enabled',
-            'back_to_top_enabled',
-            'mobile_hamburger_enabled',
-        );
-        foreach ( $flags as $flag ) {
-            if ( ! empty( $options[ $flag ] ) ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Enqueues shared frontend CSS when at least one feature is active.
-     *
-     * Skips enqueue entirely when no features are enabled — this prevents
-     * an unnecessary stylesheet request on every page load.
-     */
-    public function enqueue_frontend_assets(): void {
-        if ( ! $this->any_feature_enabled() ) {
-            return;
-        }
-
-        wp_enqueue_style(
-            'responsive-goodies-frontend',
-            RESPONSIVE_GOODIES_PLUGIN_URL . 'assets/css/frontend.css',
-            array(),
-            RESPONSIVE_GOODIES_VERSION
-        );
-    }
-    
     public function enqueue_admin_assets(string $hook): void {
         if ('settings_page_responsive-goodies' !== $hook) {
             return;
@@ -164,9 +117,6 @@ class Responsive_Goodies {
         );
         
         add_option('responsive_goodies_options', $default_options);
-        
-        // Clear changelog cache on activation
-        Responsive_Goodies_Changelog::clear_changelog_cache();
     }
 
     

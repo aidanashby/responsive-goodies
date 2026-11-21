@@ -1,9 +1,9 @@
 <!-- GSD:project-start source:PROJECT.md -->
 ## Project
 
-**Responsive Goodies — Quality Refactor**
+**Responsive Goodies**
 
-A planned quality pass on the Responsive Goodies WordPress plugin (v0.3.8). No new features — the goal is to leave the codebase cleaner, more consistent, more secure, and free of known bugs, with a version bump and changelog entry to mark the work.
+A WordPress plugin of small responsive utilities for Divi sites (v0.5.3). The quality refactor of v0.3.8 is complete (all six phases, `.planning/STATE.md`); later work adds features and fixes on top of it.
 
 **Core Value:** Every feature works correctly and the codebase is maintainable — naming is consistent, capability checks are in place, dead code is gone, obvious documentation gaps are filled, and the confirmed changelog bug is fixed.
 <!-- GSD:project-end -->
@@ -29,7 +29,7 @@ A planned quality pass on the Responsive Goodies WordPress plugin (v0.3.8). No n
 ## Frameworks
 - WordPress Plugin API — hooks, filters, options, wp_remote_get, wp_enqueue_scripts
 - No PHP framework (no Laravel, Symfony, etc.)
-- jQuery — bundled with WordPress; used as dependency for `frontend.js`, `orphan-fix.js`, `device-menu-admin.js`
+- jQuery — bundled with WordPress; used as dependency for `orphan-fix.js` and `device-menu-admin.js`
 - No CSS preprocessor (plain CSS throughout)
 - None detected — no webpack, gulp, Vite, or build pipeline
 - All assets are hand-authored and committed directly
@@ -37,14 +37,13 @@ A planned quality pass on the Responsive Goodies WordPress plugin (v0.3.8). No n
 - WordPress core — all functionality depends on WP APIs (options, post meta, enqueue, remote HTTP)
 - jQuery — required by frontend and admin JS; declared as dependency via `wp_enqueue_script`
 - Plugin Update Checker (bundled in `plugin-update-checker/`, wired in `responsive-goodies.php`) — self-hosted updates from GitHub releases. Release zips are built by `.github/workflows/release.yml` on a `v*` tag; update icons are `assets/icon-128x128.png` and `assets/icon-256x256.png`
-- GitHub Releases API — changelog retrieval via `wp_remote_get` in `class-changelog.php`
 ## Configuration
 - Plugin settings stored as a single serialised array in `wp_options` under key `responsive_goodies_options`
 - No `.env` file; no external config file
-- GitHub username and repo name hardcoded in the updater bootstrap in `responsive-goodies.php` and in `class-changelog.php`
+- GitHub username and repo name hardcoded in the updater bootstrap in `responsive-goodies.php`
 - No build config files
 ## Platform Requirements
-- WordPress local install (project uses `C:\Users\aidan\Studio\divi-5` per global config)
+- A local WordPress install with Divi 5 for testing
 - PHP with `php -l` available for syntax checking
 - Shared hosting (Krystal) running WordPress + Divi 5
 - Divi-specific compatibility logic present: features are suppressed when Divi front-end builder is active (`et_fb=1` GET param or `et_fb_is_enabled()`)
@@ -71,9 +70,9 @@ Conventions not yet established. Will populate as patterns emerge during develop
 - Contains: Constants (`RESPONSIVE_GOODIES_VERSION`, `RESPONSIVE_GOODIES_PLUGIN_DIR`, `RESPONSIVE_GOODIES_PLUGIN_URL`), top-level `add_action` and `add_filter` calls
 - Depends on: WordPress core
 - Used by: WordPress plugin loader
-- Purpose: Load all dependencies, instantiate feature classes, enqueue shared assets, check Divi builder state
+- Purpose: Load all dependencies, instantiate feature classes, enqueue admin assets, check Divi builder state
 - Location: `includes/class-responsive-goodies.php`
-- Contains: `Responsive_Goodies` class with `run()`, `load_dependencies()`, `is_divi_builder_active()`, `enqueue_frontend_assets()`, `enqueue_admin_assets()`
+- Contains: `Responsive_Goodies` class with `run()`, `load_dependencies()`, `is_divi_builder_active()`, `enqueue_admin_assets()`. Each feature enqueues its own front-end CSS and JS; there is no shared front-end stylesheet
 - Depends on: All feature classes, `Responsive_Goodies_Settings`
 - Used by: Entry point via `responsive_goodies_init()`
 - Purpose: Admin UI — registers WordPress Settings API sections and fields, renders the settings page, sanitises input
@@ -86,11 +85,9 @@ Conventions not yet established. Will populate as patterns emerge during develop
 - Contains: One class per feature with `__construct()` (reads options), `init()` (registers hooks if enabled), `is_enabled()` (option check)
 - Depends on: WordPress hooks, WordPress Options API, own CSS/JS assets
 - Used by: Orchestrator
-- Purpose: Self-update delivery (Plugin Update Checker) and changelog display via GitHub Releases API
-- Location: `plugin-update-checker/` (bundled library, bootstrapped in `responsive-goodies.php`), `includes/class-changelog.php`
-- Contains: `Responsive_Goodies_Changelog`
-- Depends on: `wp_remote_get`, WordPress transient API
-- Used by: Entry point (updater) and Settings (changelog callback)
+- Purpose: Self-update delivery (Plugin Update Checker), which also shows each release's notes in WordPress's "View details" window
+- Location: `plugin-update-checker/` (bundled library, bootstrapped in `responsive-goodies.php`)
+- Used by: Entry point
 ## Data Flow
 ## Key Abstractions
 - Every feature implements: `__construct()` reading options, `is_enabled()` checking one option key, `init()` registering hooks only when enabled
@@ -107,10 +104,6 @@ Conventions not yet established. Will populate as patterns emerge during develop
 - Triggers: User visits `options-general.php?page=responsive-goodies`
 - Responsibilities: Render all feature toggle fields, save via WordPress Settings API
 ## Error Handling
-- `wp_remote_get` results checked with `is_wp_error()` before use; returns `false` on failure
-- HTTP response code checked in `class-changelog.php` (200 required)
-- `json_decode` result validated with `json_last_error()` check in changelog class
-- Changelog display falls back to a GitHub link if API call fails
 - No exceptions thrown; no custom error logging
 ## Cross-Cutting Concerns
 <!-- GSD:architecture-end -->

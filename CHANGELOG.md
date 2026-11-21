@@ -3,6 +3,12 @@
 All notable changes to Responsive Goodies are documented in this file.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [0.5.3] - 2026-11-21
+
+### Removed
+- The shared front-end stylesheet, which held no rules but was loaded on every page whenever any feature was on. Each feature still loads its own styles.
+- The unused GitHub changelog class. Release notes still show in WordPress's "View details" window through the update checker.
+
 ## [0.5.2] - 2026-09-28
 
 ### Changed

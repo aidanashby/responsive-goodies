@@ -3,7 +3,7 @@
  * Plugin Name: Responsive Goodies
  * Plugin URI: https://lucidrhino.design
  * Description: A collection of responsive design utilities for WordPress sites.
- * Version: 0.5.2
+ * Version: 0.5.3
  * Author: Aidan Ashby
  * License: MIT
  * Requires PHP: 8.0
@@ -17,15 +17,12 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('RESPONSIVE_GOODIES_VERSION', '0.5.2');
+define('RESPONSIVE_GOODIES_VERSION', '0.5.3');
 define('RESPONSIVE_GOODIES_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RESPONSIVE_GOODIES_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Include the main plugin class
 require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-responsive-goodies.php';
-
-// Include changelog
-require_once RESPONSIVE_GOODIES_PLUGIN_DIR . 'includes/class-changelog.php';
 
 // Updates from GitHub releases. Runs in every context so WP-Cron auto-updates see new versions.
 add_action('plugins_loaded', function () {
