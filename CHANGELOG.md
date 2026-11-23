@@ -5,6 +5,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [0.5.3] - 2026-11-21
 
+### Fixed
+- Device Menu Controls: saving a menu item's device visibility now needs the "edit theme options" permission, so users without it can no longer change it.
+- Menu item IDs are cast to integers where the visibility checkboxes are printed.
+- Mobile Hamburger: the menu setting's security nonce is printed directly and checked after sanitising.
+- The release zip no longer includes `wp-plugin-check.md`, a development file.
+
 ### Removed
 - The shared front-end stylesheet, which held no rules but was loaded on every page whenever any feature was on. Each feature still loads its own styles.
 - The unused GitHub changelog class. Release notes still show in WordPress's "View details" window through the update checker.
